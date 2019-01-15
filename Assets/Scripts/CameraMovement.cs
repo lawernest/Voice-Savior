@@ -14,6 +14,7 @@ public class CameraMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		
 		//When right clicked
 		if (Input.GetMouseButtonDown (0)) {
 			dragPosition = Input.mousePosition;
