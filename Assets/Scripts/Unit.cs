@@ -5,7 +5,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour {
 
 	public float hp = 100.0f;
-	public float damage = 10.0f;
+	public float damage = 1.0f;
 
 	// Use this for initialization
 	void Start () {

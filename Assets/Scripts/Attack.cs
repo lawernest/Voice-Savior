@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour {
 
-	public float radius = 5.0f;
+	public float radius = 10.0f;
 
 	private GameObject target;
 	private Unit unit;
@@ -16,26 +16,25 @@ public class Attack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (target == null) {
-			SearchEnemy();
-		} else {
+		SearchEnemy();
+		if (target != null) {
 			AddDamage();
 		}
 	}
 
+	// Search for enemy
 	void SearchEnemy() {
-		//search for enemy
 		Collider[] enemy = Physics.OverlapSphere (this.transform.position, radius);
-
 		if (enemy.Length == 0) {
-			return;
+			target = null;
+		} else {
+			target = enemy[0].gameObject;
 		}
-
-		target = enemy[0].gameObject;
 	}
 
+	// Attack the target
 	void AddDamage() {
-		this.transform.LookAt (target.transform.position);
+		this.transform.LookAt (new Vector3(target.transform.position.x, this.transform.position.y, target.transform.position.z));
 		target.gameObject.GetComponent<Unit>().hp -= this.unit.damage; 	
 	}
 }
