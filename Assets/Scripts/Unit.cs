@@ -5,7 +5,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour {
 
 	public float hp = 100.0f;
-	public float power = 10.0f;
+	public float damage = 10.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -14,12 +14,12 @@ public class Unit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (this.hp <= 0.0f) {
+			Dead();
+		}
 	}
 
 	public void Dead() {
 		Destroy(this.gameObject);
 	}
-
-
 }
