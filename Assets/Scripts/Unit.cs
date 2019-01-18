@@ -5,7 +5,6 @@ using UnityEngine;
 public class Unit : MonoBehaviour {
 
 	public float hp = 100.0f;
-	public float damage = 1.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -21,5 +20,9 @@ public class Unit : MonoBehaviour {
 
 	public void Dead() {
 		Destroy(this.gameObject);
+	}
+
+	public void ReduceHP(float damage) {
+		this.hp -= damage;
 	}
 }

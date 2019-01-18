@@ -5,13 +5,13 @@ using UnityEngine;
 public class Attack : MonoBehaviour {
 
 	public float radius = 10.0f;
+	public float power = 1.0f;
 
 	private GameObject target;
-	private Unit unit;
 
 	// Use this for initialization
 	void Start () {
-		this.unit = this.GetComponent<Unit>();
+		
 	}
 	
 	// Update is called once per frame
@@ -29,12 +29,12 @@ public class Attack : MonoBehaviour {
 			target = null;
 		} else {
 			target = enemy[0].gameObject;
+			this.transform.LookAt(new Vector3(target.transform.position.x, this.transform.position.y, target.transform.position.z));
 		}
 	}
 
 	// Attack the target
 	void AddDamage() {
-		this.transform.LookAt (new Vector3(target.transform.position.x, this.transform.position.y, target.transform.position.z));
-		target.gameObject.GetComponent<Unit>().hp -= this.unit.damage; 	
+		target.gameObject.GetComponent<Unit>().ReduceHP(this.power);	
 	}
 }
