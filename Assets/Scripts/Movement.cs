@@ -14,12 +14,13 @@ public class Movement : MonoBehaviour {
 	void Start () {
 		this.transform.position = start.position;
 		agent = this.GetComponent<NavMeshAgent>();
+		this.agent.SetDestination(end.position);
 	}
 
 	// Update is called once per frame
 	void Update () {
 		//Move to the target position
-		this.agent.SetDestination(end.position);
+		//this.agent.SetDestination(end.position);
 		if (this.transform.position.x == end.position.x & this.transform.position.z == end.position.z) {
 			Destroy(this.gameObject);
 		}

@@ -14,11 +14,11 @@ public class Unit : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (this.hp <= 0.0f) {
-			Dead();
+			Death();
 		}
 	}
 
-	public void Dead() {
+	public void Death() {
 		Destroy(this.gameObject);
 	}
 

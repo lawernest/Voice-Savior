@@ -6,27 +6,21 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour {
 
 	public float power = 1.0f;
-	public GameObject target;
-	public Transform start;
-	public Transform end;
+	public Unit target;
+	public Transform destination;
 
 	private NavMeshAgent agent;
-	private bool isMoving = true;
 
 	// Use this for initialization
 	void Start () {
-		this.transform.position = start.position;
 		agent = this.GetComponent<NavMeshAgent>();
+		this.agent.SetDestination (destination.position);
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (isMoving) {
-			this.agent.SetDestination (end.position);
-			if (this.transform.position.x == end.position.x & this.transform.position.z == end.position.z) {
-				isMoving = false;
-			}
-		} else {
+		// Attack when it has reached the destination
+		if (this.transform.position.x == destination.position.x & this.transform.position.z == destination.position.z) {
 			if (target != null) {
 				AttackBase ();
 			}
@@ -35,9 +29,6 @@ public class EnemyAI : MonoBehaviour {
 
 	// Attack the target
 	void AttackBase() {
-		target.gameObject.GetComponent<Unit>().ReduceHP(this.power);	
-	}
-	void OnCollisionStay(Collision collide) {
-		Debug.Log (collide.gameObject.name);
+		target.ReduceHP(this.power);	
 	}
 }
