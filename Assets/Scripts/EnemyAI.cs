@@ -5,16 +5,21 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour {
 
-	public float power = 1.0f;
-	public Unit target;
-	public Transform destination;
-
+	private Unit target;
+	private Transform destination;
 	private NavMeshAgent agent;
+	private Damager damager;
 
 	// Use this for initialization
-	void Start () {
-		agent = this.GetComponent<NavMeshAgent>();
-		this.agent.SetDestination (destination.position);
+	void Start() {
+		this.agent = this.GetComponent<NavMeshAgent>();
+		this.damager = this.GetComponent<Damager>();
+		this.agent.SetDestination(destination.position);
+	}
+
+	public void Init(Transform destination, Unit target) {
+		this.destination = destination;
+		this.target = target;
 	}
 
 	// Update is called once per frame
@@ -22,13 +27,8 @@ public class EnemyAI : MonoBehaviour {
 		// Attack when it has reached the destination
 		if (this.transform.position.x == destination.position.x & this.transform.position.z == destination.position.z) {
 			if (target != null) {
-				AttackBase ();
+				this.damager.Attack(this.target);
 			}
 		}
-	}
-
-	// Attack the target
-	void AttackBase() {
-		target.ReduceHP(this.power);	
 	}
 }

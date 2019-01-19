@@ -6,21 +6,16 @@ public class WaveManager : MonoBehaviour {
 
 	public Transform[] enemyPrefab;
 	public Transform spawnPoint;
-
+	public Transform destination;
+	public Unit player_base;
 	public int totalWaves = 5;
 	public float nextWaveTime = 5.0f;
 
-	private float countdown;
-	private int waveNumber;
-
-	// Use this for initialization
-	void Start () {
-		countdown = 1.0f;
-		waveNumber = 1;
-	}
+	private float countdown = 1.0f;
+	private int waveNumber = 1;
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 		if (countdown <= 0.0f && waveNumber <= totalWaves) {
 			StartCoroutine(StartWave());
 			countdown = nextWaveTime;
@@ -40,7 +35,10 @@ public class WaveManager : MonoBehaviour {
 		
 	// Spawn enemy for the wave
 	void SpawnEnemy() {
-		Transform newEnemy = Instantiate (enemyPrefab[0], spawnPoint.position, spawnPoint.rotation);
+		int type = Random.Range (0, 2);
+		Transform newEnemy = Instantiate (enemyPrefab[type], spawnPoint.position, spawnPoint.rotation);
+		EnemyAI ai = newEnemy.GetComponent<EnemyAI>();
+		ai.Init(this.destination, this.player_base);
 		newEnemy.gameObject.SetActive(true);
 	}
 }
