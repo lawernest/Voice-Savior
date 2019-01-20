@@ -32,10 +32,6 @@ public class Bullet : MonoBehaviour {
 		this.transform.Translate(direction.normalized * cur_distance, Space.World);
 	}
 
-	public void GetTarget(Transform enemy) {
-		this.target = enemy;
-	}
-
 	void HitTarget() {
 		this.target.GetComponent<Unit> ().ReduceHP(this.damage);
 		Destroy(this.gameObject);

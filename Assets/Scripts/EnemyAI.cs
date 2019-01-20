@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour {
 
-	private Unit target;
+	private Transform target;
 	private Transform destination;
 	private NavMeshAgent agent;
 	private Damager damager;
@@ -17,7 +17,7 @@ public class EnemyAI : MonoBehaviour {
 		this.agent.SetDestination(destination.position);
 	}
 
-	public void Init(Transform destination, Unit target) {
+	public void Init(Transform destination, Transform target) {
 		this.destination = destination;
 		this.target = target;
 	}
@@ -27,7 +27,9 @@ public class EnemyAI : MonoBehaviour {
 		// Attack when it has reached the destination
 		if (this.transform.position.x == destination.position.x & this.transform.position.z == destination.position.z) {
 			if (target != null) {
-				this.damager.Attack(this.target);
+				this.damager.SetTarget(target);
+			} else {
+				this.damager.SetTarget(null);
 			}
 		}
 	}

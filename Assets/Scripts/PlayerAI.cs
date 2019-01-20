@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAI : MonoBehaviour {
 
 	public float radius = 10.0f;
+	public float rotationSpeed = 10.0f;
 
 	private Transform target;
 	private Damager damager;
@@ -18,9 +19,9 @@ public class PlayerAI : MonoBehaviour {
 	void Update () {
 		SearchEnemy();
 		if (target != null) {
-			this.damager.SetAttack(true, target);
+			this.damager.SetTarget(target);
 		} else {
-			this.damager.SetAttack(false, null);
+			this.damager.SetTarget(null);
 		}
 	}
 
@@ -59,7 +60,7 @@ public class PlayerAI : MonoBehaviour {
 	void LookAtTarget() {
 		Vector3 direction = target.position - this.transform.position;
 		Quaternion lookRotation = Quaternion.LookRotation(direction);
-		Vector3 rotation = Quaternion.Lerp (this.transform.rotation, lookRotation, Time.deltaTime * 10.0f).eulerAngles;
+		Vector3 rotation = Quaternion.Lerp (this.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed).eulerAngles;
 		this.transform.rotation = Quaternion.Euler(0.0f, rotation.y, 0.0f);
 	}
 }
