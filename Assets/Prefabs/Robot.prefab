@@ -172,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   cost: 10
+  damage: 10
 --- !u!114 &114642697154810250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -184,7 +185,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 4555824462480966}
-  power: 1
   laser: 1
   laserBeam: {fileID: 120429451518468802}
   bullet: 0
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355c0b97368ec584bac654809f5c7a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect_prefab: {fileID: 1615664409291922, guid: a63da6de26e59a64c9add39202b85650,
+  explosionPrefab: {fileID: 1615664409291922, guid: a63da6de26e59a64c9add39202b85650,
     type: 2}
   scale: 1.5
 --- !u!120 &120429451518468802

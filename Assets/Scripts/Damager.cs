@@ -6,7 +6,6 @@ public class Damager : MonoBehaviour {
 
 	[Header("Basic Setting")]
 	public Transform firePoint;
-	public float power = 1.0f;
 
 	[Header("Laser Setting")]
 	public bool laser = false;
@@ -19,18 +18,18 @@ public class Damager : MonoBehaviour {
 
 	private Transform target;
 	private float countDown = 0.0f;
+	private Unit unit;
 
 	void Start() {
 		if (laser) {
 			this.laserBeam.gameObject.SetActive(false);
 		}
+		this.unit = this.gameObject.GetComponent<Unit>();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.isPause) {
-			return;
-		}
+		if (GameManager.isPause) return;
 
 		if (target != null) {
 			if (bullet) {
@@ -38,15 +37,15 @@ public class Damager : MonoBehaviour {
 					countDown = 1.0f / fireRate;
 					FireBullet();
 				}
+		
 				countDown -= Time.deltaTime;
 			} else if (laser) {
-				FireLaserBeam();
+				FireLaserBeam ();
 			}
-			return;
-		}
-
-		if (laser) {
-			this.laserBeam.gameObject.SetActive (false);
+		} else {
+			if (laser) {
+				this.laserBeam.gameObject.SetActive (false);
+			}
 		}
 	}
 
@@ -57,13 +56,16 @@ public class Damager : MonoBehaviour {
 	void FireBullet() {
 		Transform bullet = Instantiate (ammoPrefab, this.firePoint.position, this.firePoint.rotation);
 		Bullet b = bullet.GetComponent<Bullet> ();
-		b.Init (this.power, this.target);
+		b.Init(this.unit.damage, this.target);
 	}
 
 	void FireLaserBeam() {
-		this.laserBeam.gameObject.SetActive(true);
-		this.laserBeam.SetPosition (0, firePoint.position);
-		this.laserBeam.SetPosition (1, target.position);
-		this.target.GetComponent<Unit>().ReduceHP (this.power);
+		if (!this.laserBeam.gameObject.activeInHierarchy) {
+			this.laserBeam.gameObject.SetActive(true);
+		}
+
+		this.laserBeam.SetPosition(0, firePoint.position);
+		this.laserBeam.SetPosition(1, target.position);
+		this.target.GetComponent<Unit>().ReduceHP(this.unit.damage);
 	}
 }
