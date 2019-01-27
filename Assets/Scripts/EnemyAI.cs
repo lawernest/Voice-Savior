@@ -17,7 +17,7 @@ public class EnemyAI : MonoBehaviour {
 		this.agent.SetDestination(destination.position);
 	}
 
-	public void Init(Transform destination, Transform attack_point) {
+	public void InitEnemyAI(Transform destination, Transform attack_point) {
 		this.destination = destination;
 		this.target = attack_point;
 	}

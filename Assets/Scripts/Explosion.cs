@@ -24,7 +24,7 @@ public class Explosion : MonoBehaviour {
 			Explode();
 
 			if (this.tag == "Enemy") {
-				WaveManager.enemies_on_field--;
+				GameManager.enemies_on_field--;
 			}
 
 			Destroy(this.gameObject);

@@ -4,52 +4,54 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour {
 
-	[Header("Enemy Setting")]
+	[Header("Level Setting")]
+	public Transform[] enemyPrefabs;
+	public Transform spawnPoint;
 	public Transform destination;
-	public Transform player_base;
+	public Transform attack_point;
 
 	[Header("Wave Setting")]
 	public Wave[] waves;
-	public Transform spawnPoint;
 
 	private float countdown = 1.0f;
 	private int waveNum = 0;
-	private Wave cur_Wave;
 
-	public static int enemies_on_field = 0;
-
-	void Start() {
-		cur_Wave = waves[waveNum];
-	}
+	public bool mode = false; //Normal wave
 
 	// Update is called once per frame
 	void Update() {
-		if (GameManager.isPause || waveNum == waves.Length) {
-			return;
+		if (GameManager.isPause || waveNum >= waves.Length) {
+			Debug.Log("End");
+			return; 
 		}
 
-		//TimedWave();
-		NormalWave();
+		if (mode)
+			TimedWave ();
+		else
+			NormalWave();
 	}
 
-	// Start the wave
-	IEnumerator StartWave() {
-		int enemyPrefab;
-		for (int i = 0; i < cur_Wave.totalEnemies; i++) {
-			enemyPrefab = Random.Range(0, cur_Wave.size);
-			SpawnEnemy(enemyPrefab);
-			WaveManager.enemies_on_field++;
-			yield return new WaitForSeconds (1.0f); // Wait for a second before spawning the next enemy
+	// Initialize the wave
+	IEnumerator InitWave() {
+		int index;
+		string[] sequence = waves[waveNum].enemySequence.Split(' ');
+
+		foreach (string type in sequence) {
+			index = System.Int32.Parse(type);
+			SpawnEnemy(index);
+			GameManager.enemies_on_field++;
+			yield return new WaitForSeconds (1.0f); 
 		}
+			
 		waveNum++;
+		Debug.Log (waveNum);
 	}
 
 	// Wave start according to time
 	void TimedWave() {
 		if (countdown <= 0.0f) {
-			StartCoroutine(StartWave());
-			countdown = cur_Wave.nextWaveTime;
-			cur_Wave = waves[waveNum];
+			StartCoroutine(InitWave());
+			countdown = waves[waveNum].nextWaveTime;
 		}
 
 		countdown -= Time.deltaTime;
@@ -57,21 +59,26 @@ public class WaveManager : MonoBehaviour {
 
 	// Wave start after all enemies are clear 
 	void NormalWave() {
-		if (WaveManager.enemies_on_field == 0) {
-			TimedWave ();
+		if (countdown <= 0.0f) {
+			StartCoroutine(InitWave());
+			countdown = waves[waveNum].nextWaveTime;
 		}
 
+		if (GameManager.enemies_on_field == 0) {
+			Debug.Log (countdown);
+			countdown -= Time.deltaTime;
+		} 
 	}
 
 	void SpawnEnemy(int prefabIndex) {
-		Transform prefab = cur_Wave.GetEnemyPrefab(prefabIndex);
-		Transform newEnemy = Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+		Transform newEnemy = Instantiate(enemyPrefabs[prefabIndex], spawnPoint.position, spawnPoint.rotation);
 
 		EnemyAI enemy_ai = newEnemy.GetComponent<EnemyAI>();
 		Unit unit = newEnemy.GetComponent<Unit>();
 
-		unit.Init(cur_Wave.GetEnemyHP(prefabIndex), cur_Wave.GetEnemyCost(), cur_Wave.GetEnemyDamage(prefabIndex));
-		enemy_ai.Init(destination, player_base);
+		// Initialization
+		unit.InitUnit(waves[waveNum].hpData[prefabIndex], waves[waveNum].damageData[prefabIndex], waves[waveNum].moneyDrop);
+		enemy_ai.InitEnemyAI(destination, attack_point);
 
 		newEnemy.gameObject.SetActive(true);
 	}

@@ -35,7 +35,7 @@ public class PlayerAI : MonoBehaviour {
 		if (enemies.Length == 0) {
 			target = null;
 			return;
-		}
+		} 
 
 		FindTheClosestTarget(enemies);
 		LookAtTarget();
