@@ -14,14 +14,24 @@ public class VoiceController : MonoBehaviour {
 	void Start () {
 		commands = new Dictionary<string, Action>();
 
-		commands.Add("Pause", Pause);
-		commands.Add("Resume", Resume);
+		commands.Add("Wait", Pause);
+		commands.Add("Start", Resume);
 		commands.Add("Upgrade", Upgrade);
 
 		recognizer = new KeywordRecognizer(commands.Keys.ToArray());
 		recognizer.OnPhraseRecognized += OnKeywordsRecognized;
 		recognizer.Start();
 	}
+
+	/*void Update() {
+		recognizer.OnPhraseRecognized += OnKeywordsRecognized;
+		if (Input.GetKeyDown (KeyCode.T)) {
+			recognizer.Start();
+			//recognizer.OnPhraseRecognized += OnKeywordsRecognized;
+		} else if (Input.GetKeyDown (KeyCode.S)) {
+			recognizer.Stop();
+		}
+	}*/
 
 	void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
 	{
@@ -34,14 +44,19 @@ public class VoiceController : MonoBehaviour {
 	}
 
 	void Pause() {
-		GameManager.isPause = true;
+		GameManager.instance.PauseGame();
 	}
 
 	void Resume() {
-		GameManager.isPause = false;
+		GameManager.instance.ResumeGame();
 	}
 
 	void Upgrade() {
-
+		if (MouseController.selected != null) {
+			Upgrade upgrade = MouseController.selected.GetComponent<Upgrade> ();
+			if (upgrade.Upgradable ()) {
+				upgrade.UpgradeUnit ();
+			}
+		}
 	}
 }

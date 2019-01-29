@@ -1191,7 +1191,7 @@ GameObject:
   - component: {fileID: 533530982}
   m_Layer: 0
   m_Name: Machine Gun
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2013,9 +2013,10 @@ GameObject:
   - component: {fileID: 918491005}
   - component: {fileID: 918491006}
   - component: {fileID: 918491007}
+  - component: {fileID: 918491008}
   m_Layer: 0
   m_Name: Cannon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2095,6 +2096,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 0.1, z: 3.5}
   m_Center: {x: 0, y: 1, z: 0.25}
+--- !u!114 &918491008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 918491002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d021d837c179d6499a6ecc79949532e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  next: {fileID: 1406598411}
 --- !u!1 &955429384
 GameObject:
   m_ObjectHideFlags: 0
@@ -2650,7 +2663,7 @@ GameObject:
   - component: {fileID: 1104237451}
   m_Layer: 0
   m_Name: Advanced Machine Gun
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3315,6 +3328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8872eaf591e4cf42a4dc1355179fc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies_on_field: 0
+  isPause: 0
 --- !u!1 &1392712061
 GameObject:
   m_ObjectHideFlags: 0
@@ -3406,7 +3421,7 @@ GameObject:
   - component: {fileID: 1406598416}
   m_Layer: 0
   m_Name: Laser Beam Cannon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4903,7 +4918,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1902519924}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64c526a4b2a70a547a8681e78ab5e659, type: 3}
   m_Name: 

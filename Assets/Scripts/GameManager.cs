@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 	
-	public static GameManager instance = null;
+	public static GameManager instance { get; private set; }
 
-	public static int enemies_on_field = 0;
-	public static bool isPause = false; //change to true when start menu is added
+	public int enemies_on_field = 0;
+	public bool isPause = false;
 
 	void Awake() {
 		if (instance == null) {
@@ -35,12 +35,12 @@ public class GameManager : MonoBehaviour {
 			
 	}
 
-	void PauseGame() {
+	public void PauseGame() {
 		isPause = true;
 		Time.timeScale = 0;
 	}
 
-	void ResumeGame() {
+	public void ResumeGame() {
 		isPause = false;
 		Time.timeScale = 1;
 	}

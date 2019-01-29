@@ -17,7 +17,7 @@ public class PlayerAI : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.isPause) {
+		if (GameManager.instance.isPause) {
 			return;
 		}
 

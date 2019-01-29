@@ -20,7 +20,7 @@ public class WaveManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (GameManager.isPause || waveNum >= waves.Length) {
+		if (GameManager.instance.isPause || waveNum >= waves.Length) {
 			//Debug.Log("End");
 			return; 
 		}
@@ -39,7 +39,7 @@ public class WaveManager : MonoBehaviour {
 		foreach (string type in sequence) {
 			index = System.Int32.Parse(type);
 			SpawnEnemy(index);
-			GameManager.enemies_on_field++;
+			GameManager.instance.enemies_on_field++;
 			yield return new WaitForSeconds (1.0f); 
 		}
 			
@@ -64,7 +64,7 @@ public class WaveManager : MonoBehaviour {
 			countdown = waves[waveNum].nextWaveTime;
 		}
 
-		if (GameManager.enemies_on_field == 0) {
+		if (GameManager.instance.enemies_on_field == 0) {
 			Debug.Log (countdown);
 			countdown -= Time.deltaTime;
 		} 

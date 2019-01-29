@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour {
 
+	public static Shop instance { get; private set; }
+
 	// Use this for initialization
-	void Start () {
-		
+	void Awake () {
+		if (instance == null) {
+			instance = this;
+		} else if (instance != this) {
+			Destroy(this.gameObject);
+		}
 	}
 
 	public void PurchaseCannon() {

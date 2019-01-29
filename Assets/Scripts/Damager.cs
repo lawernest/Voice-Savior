@@ -29,7 +29,7 @@ public class Damager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.isPause) return;
+		if (GameManager.instance.isPause) return;
 
 		if (target != null) {
 			if (bullet) {
@@ -39,12 +39,13 @@ public class Damager : MonoBehaviour {
 				}
 		
 				countDown -= Time.deltaTime;
+
 			} else if (laser) {
-				FireLaserBeam ();
+				FireLaserBeam();
 			}
 		} else {
 			if (laser) {
-				this.laserBeam.gameObject.SetActive (false);
+				this.laserBeam.gameObject.SetActive(false);
 			}
 		}
 	}
@@ -60,6 +61,10 @@ public class Damager : MonoBehaviour {
 	}
 
 	void FireLaserBeam() {
+		if (this.target != null) {
+
+		}
+
 		if (!this.laserBeam.gameObject.activeInHierarchy) {
 			this.laserBeam.gameObject.SetActive(true);
 		}

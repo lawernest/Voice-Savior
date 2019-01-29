@@ -13,15 +13,20 @@ public class CameraMovement : MonoBehaviour {
 	public float MAX_Y = 75.0f;
 
 	private Vector3 dragPosition;
+	private Camera main_camera;
+
+	void Start() {
+		main_camera = Camera.main;
+	}
 
 	// Update is called once per frame
 	void Update () {
 		// Skip all the updates when the game is paused
-		if (GameManager.isPause) {
+		if (GameManager.instance.isPause) {
 			return;
 		}
 
-		// Get the mouse position when the player has left cliked
+		// Get the mouse position when the player is left cliking
 		if (Input.GetMouseButtonDown(0)) {
 			dragPosition = Input.mousePosition;
 		}
@@ -32,7 +37,7 @@ public class CameraMovement : MonoBehaviour {
 		}
 
 		//Move the camera based on the mouse dragged position and current mouse position
-		Vector3 pos = Camera.main.ScreenToViewportPoint(dragPosition - Input.mousePosition);
+		Vector3 pos = main_camera.ScreenToViewportPoint(dragPosition - Input.mousePosition);
 		this.transform.Translate(pos.x * dragSpeed, 0.0f, pos.y * dragSpeed, Space.World);
 
 		// Limit the camera movement within the restricted area

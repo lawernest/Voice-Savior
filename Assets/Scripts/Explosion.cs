@@ -16,7 +16,7 @@ public class Explosion : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.isPause) {
+		if (GameManager.instance.isPause) {
 			return;
 		}
 
@@ -24,7 +24,7 @@ public class Explosion : MonoBehaviour {
 			Explode();
 
 			if (this.tag == "Enemy") {
-				GameManager.enemies_on_field--;
+				GameManager.instance.enemies_on_field--;
 			}
 
 			Destroy(this.gameObject);
