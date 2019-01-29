@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void HitTarget() {
-		this.target.GetComponent<Unit> ().ReduceHP(this.damage);
+		this.target.GetComponent<Unit>().ReduceHP(this.damage);
 		Destroy(this.gameObject);
 	}
 }

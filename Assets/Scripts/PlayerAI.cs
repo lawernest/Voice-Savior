@@ -31,11 +31,11 @@ public class PlayerAI : MonoBehaviour {
 
 	// Search for enemies
 	void SearchEnemy() {
-		Collider[] enemies = Physics.OverlapSphere (this.transform.position, radius);
+		Collider[] enemies = Physics.OverlapSphere (this.transform.position, radius, LayerMask.GetMask("Enemy")); // only search for enemy layer
 		if (enemies.Length == 0) {
 			target = null;
 			return;
-		} 
+		}
 
 		FindTheClosestTarget(enemies);
 		LookAtTarget();
@@ -43,7 +43,7 @@ public class PlayerAI : MonoBehaviour {
 
 	// Find the closest target to attack
 	void FindTheClosestTarget(Collider[] enemies) {
-		if (enemies.Length == 1) {
+		if (enemies.Length == 1 && enemies[0].tag == "Enemy") {
 			target = enemies[0].transform;
 			return;
 		}
@@ -52,6 +52,10 @@ public class PlayerAI : MonoBehaviour {
 		float distance;
 
 		foreach (Collider enemy in enemies) {
+			if (enemy.tag != "Enemy") {
+				continue;
+			}
+
 			distance = Vector3.Distance (this.transform.position, enemy.transform.position);
 			if (distance <= closest) {
 				closest = distance;

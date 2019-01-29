@@ -13,8 +13,4 @@ public class Wave : MonoBehaviour {
 	public float[] hpData;
 	public float[] damageData;
 	public float moneyDrop;
-
-	void Start() {
-		//Debug.Log (enemySequence);
-	}
 }

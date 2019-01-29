@@ -21,7 +21,7 @@ public class WaveManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update() {
 		if (GameManager.isPause || waveNum >= waves.Length) {
-			Debug.Log("End");
+			//Debug.Log("End");
 			return; 
 		}
 
@@ -44,7 +44,7 @@ public class WaveManager : MonoBehaviour {
 		}
 			
 		waveNum++;
-		Debug.Log (waveNum);
+		//Debug.Log (waveNum);
 	}
 
 	// Wave start according to time
