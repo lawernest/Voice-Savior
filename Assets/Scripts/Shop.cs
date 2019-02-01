@@ -6,7 +6,8 @@ public class Shop : MonoBehaviour {
 
 	public static Shop instance { get; private set; }
 
-	// Use this for initialization
+	public Transform tower;
+
 	void Awake () {
 		if (instance == null) {
 			instance = this;
@@ -16,7 +17,15 @@ public class Shop : MonoBehaviour {
 	}
 
 	public void PurchaseCannon() {
+		//To-Do
+
+		ModelManager.instance.CreateWeapon(0, tower.GetChild(0));
+		//ModelManager.instance.CreateWeapon(0, MouseController.selected.transform.GetChild(0));
 		Debug.Log ("Purchased Cannon");
+	}
+
+	public void CannonButton() {
+
 	}
 
 	public void PurchaseMachineGun() {

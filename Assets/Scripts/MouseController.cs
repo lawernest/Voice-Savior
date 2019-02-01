@@ -20,8 +20,13 @@ public class MouseController : MonoBehaviour {
 	void Update () {
 		if (Input.GetMouseButtonDown(0)) {
 			hit = Physics.Raycast (main_camera.ScreenPointToRay (Input.mousePosition), out hitInfo);
-			if (hit && hitInfo.transform.tag == "Player") {
-				MouseController.selected = hitInfo.transform.gameObject;
+			if(hit) {
+				//To-Do
+				if (hitInfo.transform.tag == "Weapon") {
+					MouseController.selected = hitInfo.transform.gameObject;
+				} else if (hitInfo.transform.tag == "Defense Tower") {
+					MouseController.selected = hitInfo.transform.gameObject;
+				}
 				Debug.Log ("Hit " + hitInfo.transform.name);
 			} else {
 				MouseController.selected = null;

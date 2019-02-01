@@ -1,13 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 	
 	public static GameManager instance { get; private set; }
 
-	public int enemies_on_field = 0;
-	public bool isPause = false;
+	public Text waveText = null;
+
+	[Header("Game Mode")]
+	public int mode = 0; //0 = Normal, 1 = Timed
+	[HideInInspector]public int enemies_on_field = 0;
+	[HideInInspector]public bool isPause = false;
 
 	void Awake() {
 		if (instance == null) {
@@ -17,7 +22,6 @@ public class GameManager : MonoBehaviour {
 		}
 
 		DontDestroyOnLoad (this.gameObject);
-
 		InitGame();
 	}
 		
@@ -27,21 +31,25 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		/*if (Input.GetMouseButtonDown (1)) {
+		if (Input.GetMouseButtonDown (1)) {
 			PauseGame ();
 		} else if (Input.GetMouseButtonDown (2)) {
 			ResumeGame();
-		}*/
+		}
 			
 	}
 
 	public void PauseGame() {
-		isPause = true;
+		this.isPause = true;
 		Time.timeScale = 0;
 	}
 
 	public void ResumeGame() {
-		isPause = false;
+		this.isPause = false;
 		Time.timeScale = 1;
+	}
+
+	public void UpdateWaveText(int waveNum, int finalWave) {
+		this.waveText.text = "Wave " + waveNum + "/" + finalWave;
 	}
 }

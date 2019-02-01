@@ -5,7 +5,6 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour {
 
 	[Header("Level Setting")]
-	public Transform[] enemyPrefabs;
 	public Transform spawnPoint;
 	public Transform destination;
 	public Transform attack_point;
@@ -16,16 +15,18 @@ public class WaveManager : MonoBehaviour {
 	private float countdown = 1.0f;
 	private int waveNum = 0;
 
-	public bool mode = false; //Normal wave
-
 	// Update is called once per frame
 	void Update() {
-		if (GameManager.instance.isPause || waveNum >= waves.Length) {
+		if (GameManager.instance.isPause) {
 			//Debug.Log("End");
 			return; 
 		}
 
-		if (mode)
+		if (waveNum >= waves.Length) {
+			this.gameObject.SetActive(false);
+		}
+
+		if (GameManager.instance.mode == 1)
 			TimedWave ();
 		else
 			NormalWave();
@@ -62,16 +63,17 @@ public class WaveManager : MonoBehaviour {
 		if (countdown <= 0.0f) {
 			StartCoroutine(InitWave());
 			countdown = waves[waveNum].nextWaveTime;
+			GameManager.instance.UpdateWaveText(waveNum + 1, waves.Length);
 		}
 
 		if (GameManager.instance.enemies_on_field == 0) {
-			Debug.Log (countdown);
+			//Debug.Log (countdown);
 			countdown -= Time.deltaTime;
 		} 
 	}
 
 	void SpawnEnemy(int prefabIndex) {
-		Transform newEnemy = Instantiate(enemyPrefabs[prefabIndex], spawnPoint.position, spawnPoint.rotation);
+		GameObject newEnemy = ModelManager.instance.CreateEnemy(prefabIndex, spawnPoint);
 
 		EnemyAI enemy_ai = newEnemy.GetComponent<EnemyAI>();
 		Unit unit = newEnemy.GetComponent<Unit>();
@@ -80,6 +82,6 @@ public class WaveManager : MonoBehaviour {
 		unit.InitUnit(waves[waveNum].hpData[prefabIndex], waves[waveNum].damageData[prefabIndex], waves[waveNum].moneyDrop);
 		enemy_ai.InitEnemyAI(destination, attack_point);
 
-		newEnemy.gameObject.SetActive(true);
+		newEnemy.SetActive(true);
 	}
 }
