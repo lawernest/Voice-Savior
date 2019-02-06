@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance { get; private set; }
 
 	public Text waveText = null;
+	public Text testText;
 
 	[Header("Game Mode")]
 	public int mode = 0; //0 = Normal, 1 = Timed
@@ -36,7 +37,9 @@ public class GameManager : MonoBehaviour {
 		} else if (Input.GetMouseButtonDown (2)) {
 			ResumeGame();
 		}
-			
+
+		testText.transform.position = Camera.main.WorldToScreenPoint(new Vector3(GameObject.Find ("1").transform.position.x, GameObject.Find ("1").transform.position.y + 3.0f, GameObject.Find ("1").transform.position.z));
+
 	}
 
 	public void PauseGame() {

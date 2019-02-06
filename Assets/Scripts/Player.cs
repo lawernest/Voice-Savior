@@ -15,4 +15,8 @@ public class Player : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void IncreaseGold(int amount) {
+		this.gold += amount;
+	}
 }

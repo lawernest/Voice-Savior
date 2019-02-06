@@ -20,7 +20,7 @@ public class Explosion : MonoBehaviour {
 			return;
 		}
 
-		if (this.unit.hp <= 0.0f) {
+		if (this.unit.isDead()) {
 			Explode();
 
 			if (this.tag == "Enemy") {

@@ -8,11 +8,6 @@ public class DefenseTower : MonoBehaviour {
 
 	private Transform turret = null;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-
 	public void PlaceTurret(Transform prefab) {
 		Transform turret = Instantiate (prefab, place_point.position, place_point.rotation);
 		turret.gameObject.SetActive(true);
