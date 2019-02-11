@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour {
 
+	public static Camera main_camera;
+
 	[Header("Camera Setting")]
 	public float dragSpeed = 1.5f;
 
@@ -13,18 +15,15 @@ public class CameraMovement : MonoBehaviour {
 	public float MAX_Y = 75.0f;
 
 	private Vector3 dragPosition;
-	private Camera main_camera;
 
 	void Start() {
-		main_camera = Camera.main;
+		CameraMovement.main_camera = Camera.main;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		// Skip all the updates when the game is paused
-		if (GameManager.instance.isPause) {
-			return;
-		}
+		if (GameManager.instance.isPause) return;
 
 		// Get the mouse position when the player is left cliking
 		if (Input.GetMouseButtonDown(0)) {

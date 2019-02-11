@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_hp: 100
-  cost: 10
+  cost: 100
   damage: 10
   health_UI: {fileID: 223749094054805326}
 --- !u!114 &114544824451350134

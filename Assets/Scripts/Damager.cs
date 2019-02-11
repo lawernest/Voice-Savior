@@ -45,7 +45,9 @@ public class Damager : MonoBehaviour {
 			}
 		} else {
 			if (laser) {
-				this.laserBeam.gameObject.SetActive(false);
+				this.laserBeam.gameObject.SetActive (false);
+			} else {
+				countDown = 0.0f;
 			}
 		}
 	}
@@ -61,10 +63,6 @@ public class Damager : MonoBehaviour {
 	}
 
 	void FireLaserBeam() {
-		if (this.target != null) {
-
-		}
-
 		if (!this.laserBeam.gameObject.activeInHierarchy) {
 			this.laserBeam.gameObject.SetActive(true);
 		}

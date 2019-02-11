@@ -16,16 +16,10 @@ public class Explosion : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.instance.isPause) {
-			return;
-		}
+		if (GameManager.instance.isPause) return;
 
 		if (this.unit.isDead()) {
 			Explode();
-
-			if (this.tag == "Enemy") {
-				GameManager.instance.enemies_on_field--;
-			}
 
 			Destroy(this.gameObject);
 		}

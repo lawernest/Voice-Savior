@@ -13,12 +13,9 @@ public class Bullet : MonoBehaviour {
 		this.damage = damage;
 		this.target = target;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (GameManager.instance.isPause) {
-			return;
-		}
+
+	void FixedUpdate () {
+		if (GameManager.instance.isPause) return;
 
 		if (target == null) {
 			Destroy(this.gameObject);

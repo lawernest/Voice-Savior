@@ -6,8 +6,10 @@ public class Upgrade : MonoBehaviour {
 
 	public GameObject next = null;
 
-	public void UpgradeUnit() {
-		GameObject nextUnit = Instantiate(next, this.transform.position, this.transform.rotation);
+	public void UpgradeUnit(DefenseTower tower) {
+		Transform place_point = tower.transform.GetChild(0);
+		GameObject nextUnit = Instantiate(next, place_point.position, place_point.rotation);
+		tower.PlaceTurret(nextUnit.transform);
 		nextUnit.SetActive(true);
 		Destroy(this.gameObject);
 	}

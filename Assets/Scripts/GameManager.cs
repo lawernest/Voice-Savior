@@ -7,13 +7,12 @@ public class GameManager : MonoBehaviour {
 	
 	public static GameManager instance { get; private set; }
 
-	public Text waveText = null;
-	public Text testText;
+	[HideInInspector]public int enemies_on_field;
+	[HideInInspector]public bool isPause { get; private set; }
+	[HideInInspector]public GameObject player_base { get; private set; }
 
 	[Header("Game Mode")]
 	public int mode = 0; //0 = Normal, 1 = Timed
-	[HideInInspector]public int enemies_on_field = 0;
-	[HideInInspector]public bool isPause = false;
 
 	void Awake() {
 		if (instance == null) {
@@ -22,24 +21,18 @@ public class GameManager : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 
-		DontDestroyOnLoad (this.gameObject);
+		DontDestroyOnLoad(this.gameObject);
 		InitGame();
 	}
-		
+
 	void InitGame() {
-		
+		player_base = GameObject.Find("Player Base");
+		enemies_on_field = 0;
+		isPause = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetMouseButtonDown (1)) {
-			PauseGame ();
-		} else if (Input.GetMouseButtonDown (2)) {
-			ResumeGame();
-		}
 
-		testText.transform.position = Camera.main.WorldToScreenPoint(new Vector3(GameObject.Find ("1").transform.position.x, GameObject.Find ("1").transform.position.y + 3.0f, GameObject.Find ("1").transform.position.z));
-
+	void Update() {
+		
 	}
 
 	public void PauseGame() {
@@ -50,9 +43,5 @@ public class GameManager : MonoBehaviour {
 	public void ResumeGame() {
 		this.isPause = false;
 		Time.timeScale = 1;
-	}
-
-	public void UpdateWaveText(int waveNum, int finalWave) {
-		this.waveText.text = "Wave " + waveNum + "/" + finalWave;
 	}
 }

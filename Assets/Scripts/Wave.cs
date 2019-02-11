@@ -12,5 +12,5 @@ public class Wave : MonoBehaviour {
 	[Header("Enemy Setting")]
 	public float[] hpData;
 	public float[] damageData;
-	public float moneyDrop;
+	public int moneyDrop;
 }

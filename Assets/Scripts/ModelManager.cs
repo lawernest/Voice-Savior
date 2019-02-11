@@ -7,7 +7,7 @@ public class ModelManager : MonoBehaviour {
 	public static ModelManager instance;
 
 	public GameObject[] enemyPrefabs;
-	public GameObject[] weaponPrefabs; // Store all the weapons prefab (except the one for uprade)
+	public GameObject[] weaponPrefabs; // Store all the weapons prefab (except the one for upgrade)
 
 	// Use this for initialization
 	void Awake () {
@@ -23,6 +23,22 @@ public class ModelManager : MonoBehaviour {
 	}
 
 	public GameObject CreateWeapon(int index, Transform place) {
-		return Instantiate(weaponPrefabs [index], place.position, place.rotation);
+		return Instantiate(weaponPrefabs[index], place.position, place.rotation);
+	}
+
+	public int SearchForWeapon(string name) {
+		for (int i = 0; i < weaponPrefabs.Length; i++) {
+			if (weaponPrefabs[i].name == name) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public GameObject GetWeaponPrefab(int index) {
+		if (index >= 0 || index < weaponPrefabs.Length) {
+			return this.weaponPrefabs [index];
+		}
+		return null;
 	}
 }
