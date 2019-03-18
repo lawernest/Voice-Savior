@@ -7,8 +7,14 @@ public class Player : MonoBehaviour {
 
 	public static Player instance { get; private set; }
 
-	public int gold = 0;
-	public Text goldText;
+	[SerializeField] private int gold = 0;
+	[SerializeField] private Text goldText;
+
+	public int Gold {
+		get {
+			return gold;
+		}
+	}
 
 	void Awake() {
 		if (instance == null) {
@@ -19,7 +25,12 @@ public class Player : MonoBehaviour {
 		UpdateGoldText();
 	}
 
-	public void UpdateGoldAmount(int amount) {
+	public void ReduceGold(int amount) {
+		this.gold -= amount;
+		UpdateGoldText();
+	}
+
+	public void IncreaseGold(int amount) {
 		this.gold += amount;
 		UpdateGoldText();
 	}

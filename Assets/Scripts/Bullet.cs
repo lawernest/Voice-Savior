@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-	public float speed = 10.0f;
-
+	[SerializeField] private float speed = 10.0f;
 	private float damage;
 	private Transform target;
 
-	public void Init(float damage, Transform target) {
+	public void Initialize(float damage, Transform target) {
 		this.damage = damage;
 		this.target = target;
 	}
 
-	void FixedUpdate () {
-		if (GameManager.instance.isPause) return;
+	private void FixedUpdate () {
+		if (GameManager.instance.isPause) 
+			return;
 
 		if (target == null) {
 			Destroy(this.gameObject);

@@ -7,9 +7,10 @@ public class GameManager : MonoBehaviour {
 	
 	public static GameManager instance { get; private set; }
 
-	[HideInInspector]public int enemies_on_field;
-	[HideInInspector]public bool isPause { get; private set; }
-	[HideInInspector]public GameObject player_base { get; private set; }
+	[HideInInspector] public int enemies_on_field;
+	[HideInInspector] public bool isPause { get; private set; }
+	[HideInInspector] public GameObject player_base { get; private set; }
+	[SerializeField] private GameObject waveManager;
 
 	[Header("Game Mode")]
 	public int mode = 0; //0 = Normal, 1 = Timed
@@ -20,7 +21,6 @@ public class GameManager : MonoBehaviour {
 		} else if (instance != this) {
 			Destroy(this.gameObject);
 		}
-
 		DontDestroyOnLoad(this.gameObject);
 		InitGame();
 	}
@@ -32,7 +32,12 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update() {
-		
+		if (player_base == null) {
+			Debug.Log ("Lose");
+		}
+		if (!waveManager.activeSelf && enemies_on_field == 0) {
+			Debug.Log ("Win");
+		}
 	}
 
 	public void PauseGame() {

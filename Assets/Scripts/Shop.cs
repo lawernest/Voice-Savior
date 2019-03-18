@@ -31,7 +31,7 @@ public class Shop : MonoBehaviour {
 
 		GameObject unit = ModelManager.instance.GetWeaponPrefab(index);
 		if (unit != null) {
-			if (Player.instance.gold - unit.GetComponent<Unit>().cost >= 0) {
+			if (Player.instance.Gold - unit.GetComponent<Unit>().Cost >= 0) {
 				VoiceController.weapon_index = index;
 			} else {
 				VoiceController.weapon_index = -1;
@@ -41,7 +41,7 @@ public class Shop : MonoBehaviour {
 
 	public void SellTurret(GameObject tower) {
 		DefenseTower defense_tower = tower.GetComponent<DefenseTower>();
-		Player.instance.UpdateGoldAmount((int)defense_tower.GetTurret().GetComponent<Unit>().cost/2);
+		Player.instance.IncreaseGold((int)defense_tower.GetTurret().GetComponent<Unit>().Cost/2);
 		defense_tower.RemoveTurret();
 	}
 }

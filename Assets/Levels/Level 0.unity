@@ -976,9 +976,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1339286251}
-  laser: 0
+  useLaser: 0
   laserBeam: {fileID: 0}
-  bullet: 1
+  useBullet: 1
   ammoPrefab: {fileID: 4534545989528994, guid: eff3334482bb4f045b27718e0c85fadb, type: 2}
   fireRate: 0.8
 --- !u!114 &216032279
@@ -1522,56 +1522,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 851138084}
   m_GameObject: {fileID: 328006081}
---- !u!1 &345569362
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 345569363}
-  - component: {fileID: 345569364}
-  m_Layer: 0
-  m_Name: Wave 1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &345569363
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 345569362}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 820563353}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &345569364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 345569362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 0
-  enemySequence: 0 1
-  nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
-  moneyDrop: 250
 --- !u!1 &363430447 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: e49b65dc02c57ab46b9b8761bf56cbf3, type: 3}
@@ -2489,9 +2439,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1530407738}
-  laser: 0
+  useLaser: 0
   laserBeam: {fileID: 0}
-  bullet: 1
+  useBullet: 1
   ammoPrefab: {fileID: 4649879983618820, guid: f424df1fb8c377d4bb3008abd754771f, type: 2}
   fireRate: 2.5
 --- !u!114 &652380475
@@ -2779,9 +2729,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1929407125}
-  laser: 1
+  useLaser: 1
   laserBeam: {fileID: 129419604}
-  bullet: 0
+  useBullet: 0
   ammoPrefab: {fileID: 0}
   fireRate: 1
 --- !u!114 &713108373
@@ -2956,6 +2906,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27b13c5949bd6084a89ca9df96cf53e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &721250009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 721250011}
+  - component: {fileID: 721250010}
+  m_Layer: 0
+  m_Name: Wave 8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &721250010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 721250009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemySequence: 0 1
+  nextWaveTime: 10
+  hpData:
+  - 500
+  - 150
+  damageData:
+  - 15
+  - 10
+  moneyDrop: 250
+--- !u!4 &721250011
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 721250009}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 820563353}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &744293730
 Prefab:
   m_ObjectHideFlags: 0
@@ -3501,9 +3501,16 @@ MonoBehaviour:
   spawnPoint: {fileID: 653668169}
   destination: {fileID: 216284834}
   waves:
-  - {fileID: 345569364}
+  - {fileID: 1492958930}
   - {fileID: 1742247512}
   - {fileID: 1834954780}
+  - {fileID: 2076265225}
+  - {fileID: 978004279}
+  - {fileID: 1515094374}
+  - {fileID: 1165806662}
+  - {fileID: 721250010}
+  - {fileID: 1498887757}
+  - {fileID: 1227538680}
   waveText: {fileID: 1620723026}
   counter: {fileID: 630048143}
 --- !u!4 &820563353
@@ -3516,9 +3523,16 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 345569363}
+  - {fileID: 1492958931}
   - {fileID: 1742247511}
   - {fileID: 1834954781}
+  - {fileID: 2076265226}
+  - {fileID: 978004280}
+  - {fileID: 1515094375}
+  - {fileID: 1165806663}
+  - {fileID: 721250011}
+  - {fileID: 1498887758}
+  - {fileID: 1227538681}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3688,6 +3702,16 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114989669423677110, guid: f349a02eeb871f944aa86d161bd17f71,
+        type: 2}
+      propertyPath: useLaser
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114989669423677110, guid: f349a02eeb871f944aa86d161bd17f71,
+        type: 2}
+      propertyPath: useBullet
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f349a02eeb871f944aa86d161bd17f71, type: 2}
   m_IsPrefabParent: 0
@@ -3717,7 +3741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &882641874
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4089,6 +4113,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1676837837}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &978004278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 978004280}
+  - component: {fileID: 978004279}
+  m_Layer: 0
+  m_Name: Wave 5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &978004279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 978004278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemySequence: 0 1
+  nextWaveTime: 10
+  hpData:
+  - 500
+  - 150
+  damageData:
+  - 15
+  - 10
+  moneyDrop: 250
+--- !u!4 &978004280
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 978004278}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 820563353}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &986145113
 GameObject:
@@ -4917,6 +4991,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1156693516}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1165806661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1165806663}
+  - component: {fileID: 1165806662}
+  m_Layer: 0
+  m_Name: Wave 7
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &1165806662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1165806661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemySequence: 0 1
+  nextWaveTime: 10
+  hpData:
+  - 500
+  - 150
+  damageData:
+  - 15
+  - 10
+  moneyDrop: 250
+--- !u!4 &1165806663
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1165806661}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 820563353}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1176780699
 GameObject:
   m_ObjectHideFlags: 0
@@ -5114,9 +5238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 2065867064}
-  laser: 0
+  useLaser: 0
   laserBeam: {fileID: 0}
-  bullet: 1
+  useBullet: 1
   ammoPrefab: {fileID: 4649879983618820, guid: f424df1fb8c377d4bb3008abd754771f, type: 2}
   fireRate: 5
 --- !u!114 &1202686168
@@ -5237,6 +5361,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 744293730}
   m_GameObject: {fileID: 1209425730}
   m_Mesh: {fileID: 4300006, guid: b2454217940ed2342bbd394aa5cc5e7a, type: 3}
+--- !u!1 &1227538679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1227538681}
+  - component: {fileID: 1227538680}
+  m_Layer: 0
+  m_Name: Wave 10
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &1227538680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1227538679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemySequence: 0 1
+  nextWaveTime: 10
+  hpData:
+  - 500
+  - 150
+  damageData:
+  - 15
+  - 10
+  moneyDrop: 250
+--- !u!4 &1227538681
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1227538679}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 820563353}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1306307613
 Prefab:
   m_ObjectHideFlags: 0
@@ -5353,6 +5527,10 @@ Prefab:
         type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713685509497498, guid: d0af4d5f351e64344930208989972cb7, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0af4d5f351e64344930208989972cb7, type: 2}
@@ -5607,6 +5785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies_on_field: 0
+  waveManager: {fileID: 820563350}
   mode: 0
 --- !u!114 &1380614211
 MonoBehaviour:
@@ -5992,10 +6171,160 @@ Transform:
   m_Father: {fileID: 1800161286}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1492958929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1492958931}
+  - component: {fileID: 1492958930}
+  m_Layer: 0
+  m_Name: Wave 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &1492958930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1492958929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemySequence: 0 1
+  nextWaveTime: 10
+  hpData:
+  - 500
+  - 150
+  damageData:
+  - 15
+  - 10
+  moneyDrop: 250
+--- !u!4 &1492958931
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1492958929}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 820563353}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1498887756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1498887758}
+  - component: {fileID: 1498887757}
+  m_Layer: 0
+  m_Name: Wave 9
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &1498887757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1498887756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemySequence: 0 1
+  nextWaveTime: 10
+  hpData:
+  - 500
+  - 150
+  damageData:
+  - 15
+  - 10
+  moneyDrop: 250
+--- !u!4 &1498887758
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1498887756}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 820563353}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1506678228 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: e49b65dc02c57ab46b9b8761bf56cbf3, type: 3}
   m_PrefabInternal: {fileID: 189520403}
+--- !u!1 &1515094373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1515094375}
+  - component: {fileID: 1515094374}
+  m_Layer: 0
+  m_Name: Wave 6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &1515094374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1515094373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemySequence: 0 1
+  nextWaveTime: 10
+  hpData:
+  - 500
+  - 150
+  damageData:
+  - 15
+  - 10
+  moneyDrop: 250
+--- !u!4 &1515094375
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1515094373}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 820563353}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1518284990
 Prefab:
   m_ObjectHideFlags: 0
@@ -7792,17 +8121,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64c526a4b2a70a547a8681e78ab5e659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameLog: {fileID: 0}
 --- !u!114 &1902519926
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1902519924}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5b6e8126d05df24a8536e56634da58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameLog: {fileID: 0}
 --- !u!4 &1902519927
 Transform:
   m_ObjectHideFlags: 0
@@ -7892,7 +8223,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1903361882}
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 73.8, y: 18.93, z: 51.2}
+  m_LocalPosition: {x: 73.8, y: 19.45, z: 50.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8795,6 +9126,56 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2072325132}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2076265224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2076265226}
+  - component: {fileID: 2076265225}
+  m_Layer: 0
+  m_Name: Wave 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!114 &2076265225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2076265224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+  enemySequence: 0 1
+  nextWaveTime: 10
+  hpData:
+  - 500
+  - 150
+  damageData:
+  - 15
+  - 10
+  moneyDrop: 250
+--- !u!4 &2076265226
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2076265224}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 820563353}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2095413205
 GameObject:
   m_ObjectHideFlags: 0

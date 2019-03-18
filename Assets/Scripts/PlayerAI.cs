@@ -4,31 +4,28 @@ using UnityEngine;
 
 public class PlayerAI : MonoBehaviour {
 
-	public float radius = 10.0f;
-	public float rotationSpeed = 10.0f;
+	[SerializeField] private float radius = 10.0f;
+	[SerializeField] private float rotationSpeed = 10.0f;
 
 	private Transform target;
 	private Damager damager;
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
 		this.damager = this.GetComponent<Damager>();
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if (GameManager.instance.isPause) return;
+	private void Update () {
+		if (GameManager.instance.isPause)
+			return;
 
 		SearchEnemy();
-		if (target != null) {
-			this.damager.SetTarget(target);
-		} else {
-			this.damager.SetTarget(null);
-		}
+		this.damager.SetTarget(target);
 	}
 
 	// Search for enemies
-	void SearchEnemy() {
+	private void SearchEnemy() {
 		Collider[] enemies = Physics.OverlapSphere (this.transform.position, radius, LayerMask.GetMask("Enemy")); // only search for enemy layer
 		if (enemies.Length == 0) {
 			target = null;
@@ -40,7 +37,7 @@ public class PlayerAI : MonoBehaviour {
 	}
 
 	// Find the closest target to attack
-	void FindTheClosestTarget(Collider[] enemies) {
+	private void FindTheClosestTarget(Collider[] enemies) {
 		if (enemies.Length == 1 && enemies[0].tag == "Enemy") {
 			target = enemies[0].transform;
 			return;
@@ -63,7 +60,7 @@ public class PlayerAI : MonoBehaviour {
 	}
 
 	// Look at the enemy direction
-	void LookAtTarget() {
+	private void LookAtTarget() {
 		Vector3 direction = target.position - this.transform.position;
 		Quaternion lookRotation = Quaternion.LookRotation(direction);
 		Vector3 rotation = Quaternion.Lerp (this.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed).eulerAngles;

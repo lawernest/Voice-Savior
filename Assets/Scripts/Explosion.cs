@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour {
 
-	public GameObject explosionPrefab;
-	public float scale = 1.0f;
-
+	[SerializeField] private GameObject explosionPrefab;
+	[SerializeField] private float scale = 1.0f;
 	private Unit unit;
 
 	// Use this for initialization
@@ -16,11 +15,11 @@ public class Explosion : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.instance.isPause) return;
+		if (GameManager.instance.isPause) 
+			return;
 
 		if (this.unit.isDead()) {
 			Explode();
-
 			Destroy(this.gameObject);
 		}
 	}

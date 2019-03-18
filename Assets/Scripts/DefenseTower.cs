@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class DefenseTower : MonoBehaviour {
 
-	public Transform place_point;
-	public Text label;
-
+	[SerializeField] private Transform place_point;
+	[SerializeField] private Text label;
 	private Transform turret = null;
 
-	void Update() {
+	private void Start() {
+		this.turret = null;
+	}
+
+	private void Update() {
 		label.transform.position = CameraMovement.main_camera.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + 5.0f, this.transform.position.z));
 	}
 

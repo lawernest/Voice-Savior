@@ -2,33 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseController : MonoBehaviour {
-
-	public static GameObject selected;
+public class MouseController : Controller {
 
 	private RaycastHit hitInfo;
 	private bool hit;
 
 	// Use this for initialization
-	void Awake () {
+	private void Awake () {
 		hitInfo = new RaycastHit();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetMouseButtonDown(0)) {
+	private void Update () {
+		if (Input.GetMouseButtonDown (0)) {
 			hit = Physics.Raycast (CameraMovement.main_camera.ScreenPointToRay (Input.mousePosition), out hitInfo);
-			if(hit) {
+			if (hit) {
 				//To-Do
 				if (hitInfo.transform.tag == "Weapon") {
-					MouseController.selected = hitInfo.transform.gameObject;
+					Controller.selected = hitInfo.transform.gameObject;
 				} else if (hitInfo.transform.tag == "Defense Tower") {
-					MouseController.selected = hitInfo.transform.gameObject;
+					Controller.selected = hitInfo.transform.gameObject;
 				}
 				Debug.Log ("Hit " + hitInfo.transform.name);
 			} else {
-				MouseController.selected = null;
+				Controller.selected = null;
 			}
 		} 
+	}	
+
+	protected override void UpdateLog() {
+
 	}
+
 }

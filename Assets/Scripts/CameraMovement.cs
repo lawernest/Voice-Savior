@@ -7,25 +7,25 @@ public class CameraMovement : MonoBehaviour {
 	public static Camera main_camera;
 
 	[Header("Camera Setting")]
-	public float dragSpeed = 1.5f;
-
-	public float MIN_X = 40.0f;
-	public float MAX_X = 80.0f;
-	public float MIN_Y = 30.0f;
-	public float MAX_Y = 75.0f;
+	[SerializeField] private float dragSpeed = 1.5f;
+	[SerializeField] private float MIN_X = 40.0f;
+	[SerializeField] private float MAX_X = 80.0f;
+	[SerializeField] private float MIN_Y = 30.0f;
+	[SerializeField] private float MAX_Y = 75.0f;
 
 	private Vector3 dragPosition;
 
-	void Start() {
+	private void Start() {
 		CameraMovement.main_camera = Camera.main;
 	}
 
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
 		// Skip all the updates when the game is paused
-		if (GameManager.instance.isPause) return;
+		if (GameManager.instance.isPause) 
+			return;
 
-		// Get the mouse position when the player is left cliking
+		// Get the mouse position when the player has left cliked
 		if (Input.GetMouseButtonDown(0)) {
 			dragPosition = Input.mousePosition;
 		}
@@ -36,10 +36,13 @@ public class CameraMovement : MonoBehaviour {
 		}
 
 		//Move the camera based on the mouse dragged position and current mouse position
-		Vector3 pos = main_camera.ScreenToViewportPoint(dragPosition - Input.mousePosition);
-		this.transform.Translate(pos.x * dragSpeed, 0.0f, pos.y * dragSpeed, Space.World);
+		Vector3 position = main_camera.ScreenToViewportPoint(dragPosition - Input.mousePosition);
+		this.transform.Translate(position.x * dragSpeed, 0.0f, position.y * dragSpeed, Space.World);
 
 		// Limit the camera movement within the restricted area
-		this.transform.position = new Vector3(Mathf.Clamp (this.transform.position.x, MIN_X, MAX_X), this.transform.position.y, Mathf.Clamp (this.transform.position.z, MIN_Y, MAX_Y));
+		this.transform.position = new Vector3(
+			Mathf.Clamp (this.transform.position.x, MIN_X, MAX_X), 
+			this.transform.position.y, 
+			Mathf.Clamp (this.transform.position.z, MIN_Y, MAX_Y));
 	}
 }

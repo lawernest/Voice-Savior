@@ -6,18 +6,18 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour {
 
 	private Transform destination;
-	private Transform target;
 	private NavMeshAgent agent;
+	private Transform target;
 	private Damager damager;
 
 	// Use this for initialization
-	void Start() {
+	private void Start() {
 		this.agent = this.GetComponent<NavMeshAgent>();
 		this.damager = this.GetComponent<Damager>();
 		this.agent.SetDestination(destination.position);
 	}
 
-	public void InitEnemyAI(Transform destination, Transform attack_point) {
+	public void Initialize(Transform destination, Transform attack_point) {
 		this.destination = destination;
 		this.target = attack_point;
 	}

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Upgrade : MonoBehaviour {
 
-	public GameObject next = null;
+	[SerializeField] 
+	private GameObject next = null;
 
 	public void UpgradeUnit(DefenseTower tower) {
 		Transform place_point = tower.transform.GetChild(0);

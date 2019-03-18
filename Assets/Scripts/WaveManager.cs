@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class WaveManager : MonoBehaviour {
 
 	[Header("Level Setting")]
-	public Transform spawnPoint;
-	public Transform destination;
+	[SerializeField] private Transform spawnPoint;
+	[SerializeField] private Transform destination;
 
 	[Header("Wave Setting")]
-	public Wave[] waves;
-	public Text waveText;
-	public Text counter;
+	[SerializeField] private Wave[] waves;
+	[SerializeField] private Text waveText;
+	[SerializeField] private Text counter;
 
 	private Transform attack_point;
 	private const float normalWaitTime = 10.0f;
@@ -21,10 +21,10 @@ public class WaveManager : MonoBehaviour {
 	private Text timer;
 
 	void Start() {
-		attack_point = GameManager.instance.player_base.transform;
-		timer = counter.transform.GetChild(0).GetComponent<Text>();
-		waveNum = 0;
-		countdown = normalWaitTime;
+		this.attack_point = GameManager.instance.player_base.transform;
+		this.timer = this.counter.transform.GetChild(0).GetComponent<Text>();
+		this.waveNum = 0;
+		this.countdown = normalWaitTime;
 		UpdateWaveText();
 	}
 
@@ -82,28 +82,28 @@ public class WaveManager : MonoBehaviour {
 		}
 	}
 
-	void SpawnEnemy(int prefabIndex) {
+	private void SpawnEnemy(int prefabIndex) {
 		GameObject newEnemy = ModelManager.instance.CreateEnemy(prefabIndex, spawnPoint);
 		EnemyAI enemy_ai = newEnemy.GetComponent<EnemyAI>();
 		Unit unit = newEnemy.GetComponent<Unit>();
+		Wave curWave = waves[waveNum];
 
 		// Initialization
-		unit.InitUnit(waves[waveNum].hpData[prefabIndex], waves[waveNum].damageData[prefabIndex], waves[waveNum].moneyDrop);
-		enemy_ai.InitEnemyAI(destination, attack_point);
+		unit.Initialize(curWave.hpData[prefabIndex], curWave.damageData[prefabIndex], curWave.moneyDrop);
+		enemy_ai.Initialize(destination, attack_point);
 		newEnemy.SetActive(true);
 	}
 
-	void UpdateWaveText() {
+	private void UpdateWaveText() {
 		this.waveText.text = "Wave " + (waveNum + 1) + "/" + waves.Length;
 	}
 
-	void UpdateCounter() {
+	private void UpdateCounter() {
 		if(!counter.IsActive()) {
 			counter.gameObject.SetActive(true);
 		}
 
 		this.timer.text = UIManager.instance.TimeFormat(countdown);
-
 		if (countdown <= 0.0f) {
 			counter.gameObject.SetActive(false);
 		}

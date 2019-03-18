@@ -37,7 +37,7 @@ public class ModelManager : MonoBehaviour {
 
 	public GameObject GetWeaponPrefab(int index) {
 		if (index >= 0 || index < weaponPrefabs.Length) {
-			return this.weaponPrefabs [index];
+			return this.weaponPrefabs[index];
 		}
 		return null;
 	}

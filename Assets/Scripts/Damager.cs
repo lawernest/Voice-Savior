@@ -5,49 +5,45 @@ using UnityEngine;
 public class Damager : MonoBehaviour {
 
 	[Header("Basic Setting")]
-	public Transform firePoint;
+	[SerializeField] private Transform firePoint;
 
 	[Header("Laser Setting")]
-	public bool laser = false;
-	public LineRenderer laserBeam;
+	[SerializeField] private bool useLaser = false;
+	[SerializeField] private LineRenderer laserBeam;
 
 	[Header("Bullet Setting")]
-	public bool bullet = true;
-	public Transform ammoPrefab;
-	public float fireRate = 1.0f;
+	[SerializeField] private bool useBullet = true;
+	[SerializeField] private Transform ammoPrefab;
+	[SerializeField] private float fireRate = 1.0f;
 
 	private Transform target;
 	private float countDown = 0.0f;
 	private Unit unit;
 
-	void Start() {
-		if (laser) {
-			this.laserBeam.gameObject.SetActive(false);
-		}
+	private void Start() {
 		this.unit = this.gameObject.GetComponent<Unit>();
 	}
+		
+	private void Update () {
+		if (GameManager.instance.isPause) 
+			return;
 
-	// Update is called once per frame
-	void Update () {
-		if (GameManager.instance.isPause) return;
-
-		if (target != null) {
-			if (bullet) {
-				if (countDown <= 0.0f) {
-					countDown = 1.0f / fireRate;
+		if (this.target != null) {
+			if (this.useBullet) {
+				if (this.countDown <= 0.0f) {
+					this.countDown = 1.0f / this.fireRate;
 					FireBullet();
 				}
-		
-				countDown -= Time.deltaTime;
+				this.countDown -= Time.deltaTime;
 
-			} else if (laser) {
+			} else if(this.useLaser) {
 				FireLaserBeam();
 			}
 		} else {
-			if (laser) {
-				this.laserBeam.gameObject.SetActive (false);
+			if (this.useLaser) {
+				this.laserBeam.gameObject.SetActive(false);
 			} else {
-				countDown = 0.0f;
+				this.countDown = 0.0f;
 			}
 		}
 	}
@@ -56,19 +52,19 @@ public class Damager : MonoBehaviour {
 		this.target = enemy;
 	}
 
-	void FireBullet() {
-		Transform bullet = Instantiate (ammoPrefab, this.firePoint.position, this.firePoint.rotation);
-		Bullet b = bullet.GetComponent<Bullet> ();
-		b.Init(this.unit.damage, this.target);
+	private void FireBullet() {
+		Transform bulletPrefab = Instantiate(ammoPrefab, this.firePoint.position, this.firePoint.rotation);
+		Bullet bullet = bulletPrefab.GetComponent<Bullet>();
+		bullet.Initialize(this.unit.Damage, this.target);
 	}
 
-	void FireLaserBeam() {
+	private void FireLaserBeam() {
 		if (!this.laserBeam.gameObject.activeInHierarchy) {
 			this.laserBeam.gameObject.SetActive(true);
 		}
 
 		this.laserBeam.SetPosition(0, firePoint.position);
 		this.laserBeam.SetPosition(1, target.position);
-		this.target.GetComponent<Unit>().ReduceHP(this.unit.damage);
+		this.target.GetComponent<Unit>().ReduceHP(this.unit.Damage);
 	}
 }
