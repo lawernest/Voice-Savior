@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour {
 
@@ -33,5 +34,9 @@ public class UIManager : MonoBehaviour {
 		int seconds = (int) time - 60 * minutes;
 
 		return string.Format("{0:00}:{1:00}", minutes, seconds);
+	}
+
+	public void StartGame() {
+		SceneManager.LoadScene("Level 0");
 	}
 }
