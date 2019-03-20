@@ -14,14 +14,14 @@ public class WaveManager : MonoBehaviour {
 	[SerializeField] private Text waveText;
 	[SerializeField] private Text counter;
 
-	private Transform attack_point;
+	private Transform enemyParent;
 	private const float normalWaitTime = 10.0f;
 	private float countdown;
 	private int waveNum;
 	private Text timer;
 
 	void Start() {
-		this.attack_point = GameManager.instance.player_base.transform;
+		this.enemyParent = GameObject.Find("Enemy").transform;
 		this.timer = this.counter.transform.GetChild(0).GetComponent<Text>();
 		this.waveNum = 0;
 		this.countdown = normalWaitTime;
@@ -33,7 +33,7 @@ public class WaveManager : MonoBehaviour {
 		if (GameManager.instance.isPause)
 			return;
 
-		if (waveNum >= waves.Length)
+		if (this.waveNum >= this.waves.Length)
 			this.gameObject.SetActive(false);
 
 		if (GameManager.instance.mode == 1)
@@ -45,7 +45,7 @@ public class WaveManager : MonoBehaviour {
 	// Initialize the wave
 	IEnumerator InitWave() {
 		int index;
-		string[] sequence = waves[waveNum].enemySequence.Split(' ');
+		string[] sequence = this.waves[waveNum].enemySequence.Split(' ');
 
 		foreach (string type in sequence) {
 			index = System.Int32.Parse(type);
@@ -54,7 +54,7 @@ public class WaveManager : MonoBehaviour {
 			yield return new WaitForSeconds (1.0f); 
 		}
 			
-		waveNum++;
+		this.waveNum++;
 	}
 
 	// Wave start according to time
@@ -72,12 +72,12 @@ public class WaveManager : MonoBehaviour {
 	void NormalWave() {
 		if (countdown <= 0.0f) {
 			StartCoroutine(InitWave());
-			countdown = normalWaitTime;
+			this.countdown = normalWaitTime;
 			UpdateWaveText();
 		}
 
 		if (GameManager.instance.enemies_on_field == 0) {
-			countdown -= Time.deltaTime;
+			this.countdown -= Time.deltaTime;
 			UpdateCounter();
 		}
 	}
@@ -90,7 +90,8 @@ public class WaveManager : MonoBehaviour {
 
 		// Initialization
 		unit.Initialize(curWave.hpData[prefabIndex], curWave.damageData[prefabIndex], curWave.moneyDrop);
-		enemy_ai.Initialize(destination, attack_point);
+		enemy_ai.Initialize(destination, GameManager.instance.PlayerBase.transform);
+		newEnemy.transform.SetParent(enemyParent);
 		newEnemy.SetActive(true);
 	}
 
@@ -99,13 +100,12 @@ public class WaveManager : MonoBehaviour {
 	}
 
 	private void UpdateCounter() {
-		if(!counter.IsActive()) {
-			counter.gameObject.SetActive(true);
+		if(!this.counter.IsActive()) {
+			this.counter.gameObject.SetActive(true);
 		}
-
 		this.timer.text = UIManager.instance.TimeFormat(countdown);
-		if (countdown <= 0.0f) {
-			counter.gameObject.SetActive(false);
+		if (this.countdown <= 0.0f) {
+			this.counter.gameObject.SetActive(false);
 		}
 	}
 }

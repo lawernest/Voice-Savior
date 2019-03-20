@@ -39,13 +39,12 @@ public class Unit : MonoBehaviour {
 	}
 
 	private void Update() {
-		if (GameManager.instance.isPause) return;
+		if (GameManager.instance.isPause) 
+			return;
 
-		if (this.isDead ()) {
-			if (this.tag == "Enemy") {
-				Player.instance.IncreaseGold(this.cost);
-				GameManager.instance.enemies_on_field--;
-			}
+		if (this.isDead() && this.tag == "Enemy") {
+			Player.instance.IncreaseGold(this.cost);
+			GameManager.instance.enemies_on_field--;
 		}
 		if (health_UI != null) {
 			UIManager.instance.FaceToCamera(health_UI.transform);

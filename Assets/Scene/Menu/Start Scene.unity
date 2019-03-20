@@ -638,7 +638,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1538312942}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1666435087}
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1538312942
@@ -684,7 +695,7 @@ GameObject:
   - component: {fileID: 1666435088}
   - component: {fileID: 1666435087}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,9 +709,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1666435086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72a91159ec3564e4ca6ba544b739f0eb, type: 3}
+  m_Script: {fileID: 11500000, guid: b8872eaf591e4cf42a4dc1355179fc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemies_on_field: 0
+  mode: 0
 --- !u!4 &1666435088
 Transform:
   m_ObjectHideFlags: 0
@@ -865,7 +878,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!224 &2111223033
 RectTransform:

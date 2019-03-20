@@ -14,16 +14,17 @@ public class Bullet : MonoBehaviour {
 	}
 
 	private void FixedUpdate () {
-		if (GameManager.instance.isPause) 
+		if (GameManager.instance.isPause) {
 			return;
+		}
 
-		if (target == null) {
+		if (this.target == null) {
 			Destroy(this.gameObject);
 			return;
 		}
 
-		Vector3 direction = target.position - this.transform.position;
-		float cur_distance = speed * Time.deltaTime;
+		Vector3 direction = this.target.position - this.transform.position;
+		float cur_distance = this.speed * Time.deltaTime;
 
 		if (direction.magnitude <= cur_distance) {
 			HitTarget();
@@ -33,7 +34,7 @@ public class Bullet : MonoBehaviour {
 		this.transform.Translate(direction.normalized * cur_distance, Space.World);
 	}
 
-	void HitTarget() {
+	private void HitTarget() {
 		this.target.GetComponent<Unit>().ReduceHP(this.damage);
 		Destroy(this.gameObject);
 	}

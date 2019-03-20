@@ -6,7 +6,6 @@ public class PlayerAI : MonoBehaviour {
 
 	[SerializeField] private float radius = 10.0f;
 	[SerializeField] private float rotationSpeed = 10.0f;
-
 	private Transform target;
 	private Damager damager;
 
@@ -21,7 +20,7 @@ public class PlayerAI : MonoBehaviour {
 			return;
 
 		SearchEnemy();
-		this.damager.SetTarget(target);
+		this.damager.Target = target;
 	}
 
 	// Search for enemies
@@ -47,7 +46,7 @@ public class PlayerAI : MonoBehaviour {
 		float distance;
 
 		foreach (Collider enemy in enemies) {
-			if (enemy.tag != "Enemy") {
+			if(enemy.tag != "Enemy") {
 				continue;
 			}
 

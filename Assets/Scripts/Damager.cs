@@ -20,6 +20,15 @@ public class Damager : MonoBehaviour {
 	private float countDown = 0.0f;
 	private Unit unit;
 
+	public Transform Target {
+		get {
+			return target;
+		}
+		set {
+			target = value;
+		}
+	}
+
 	private void Start() {
 		this.unit = this.gameObject.GetComponent<Unit>();
 	}
