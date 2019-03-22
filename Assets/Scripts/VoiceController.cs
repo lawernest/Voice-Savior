@@ -7,23 +7,45 @@ using UnityEngine.Windows.Speech; // For speech recognition
 
 public class VoiceController : Controller {
 
-	public enum Command { None, Select, Buy };
+	public enum Command { 
+		None, 
+		Select,
+		Buy
+	};
 
-	public static int weapon_index = -1;
-
+	public static VoiceController instance { get; private set; }
+	private int weapon_index = -1;
 	private List<string> commands_list;
 	private KeywordRecognizer recognizer;
 	private Command cur_command;
 
-	void Start () {
+	public int WeaponIndex {
+		get {
+			return weapon_index;
+		}
+		set {
+			weapon_index = value;
+		}
+	}
+
+	private void Start() {
+		if (instance == null) {
+			instance = this;
+		} else if (instance != this) {
+			Destroy(this.gameObject);
+		}
+
 		// Initialize a list to store the commands
 		commands_list = new List<string>();
 		cur_command = Command.None;
+
 		// Add all required game commands to the commands_list
 		AddCommandsToList();
+
 		// Add the keywords to the recogniezr and set the confidence level
 		recognizer = new KeywordRecognizer(commands_list.ToArray(), ConfidenceLevel.Low);
 		recognizer.OnPhraseRecognized += OnKeywordsRecognized;
+
 		// Start the recognizer
 		recognizer.Start();
 	}
@@ -35,10 +57,12 @@ public class VoiceController : Controller {
 		commands_list.Add("Sell");
 		commands_list.Add("Cancel");
 		// To-Do: camera commands 
-		commands_list.Add("Move up");
-		commands_list.Add("Move down");
-		commands_list.Add("Move left");
-		commands_list.Add("Move right");
+		commands_list.Add("Move Up");
+		commands_list.Add("Move Down");
+		commands_list.Add("Move Left");
+		commands_list.Add("Move Right");
+		commands_list.Add ("Stop");
+		// To-Do: Center camera to object
 
 		Transform towers = GameObject.Find("Towers").transform;
 		GameObject[] weapons = ModelManager.instance.weaponPrefabs;
@@ -58,15 +82,19 @@ public class VoiceController : Controller {
 	private void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
 	{
 		Debug.Log ("Command: " + args.text);
-		String[] words = args.text.Split (' ');
+		String[] words = args.text.Split(' ');
 
 		switch (words[0]) {
 		case "Move":
 			MoveCamera(words[1]);
 			cur_command = Command.None;
 			break;
+		case "Stop":
+			MoveCamera ("Stop");
+			cur_command = Command.None;
+			break;
 		case "Pause":
-			Pause ();
+			Pause();
 			cur_command = Command.None;
 			break;
 		case "Resume":
@@ -74,12 +102,12 @@ public class VoiceController : Controller {
 			cur_command = Command.None;
 			break;
 		case "Select":
-			Select (words [1]);
+			Select (words[1]);
 			cur_command = Command.Select;
 			break;
 		case "Buy":
-			Buy(words [1]);
-			if (weapon_index != -1) {
+			Buy(words[1]);
+			if (WeaponIndex!= -1) {
 				cur_command = Command.Buy;
 			}
 			break;
@@ -88,7 +116,7 @@ public class VoiceController : Controller {
 			break;
 		}
 
-		if (weapon_index != -1) {
+		if (WeaponIndex != -1) {
 			cur_command = Command.Buy;
 		}
 
@@ -103,7 +131,7 @@ public class VoiceController : Controller {
 			}
 			break;
 		case Command.Buy:
-			if (words [0] == "Place") {
+			if (words[0] == "Place") {
 				PlaceOn (words [2]);
 				cur_command = Command.None;
 			}
@@ -112,7 +140,23 @@ public class VoiceController : Controller {
 	}
 
 	private void MoveCamera(string direction) {
-
+		switch (direction) {
+		case "Up":
+			CameraMovement.moveDirection = CameraMovement.Direction.North;
+			break;
+		case "Down":
+			CameraMovement.moveDirection = CameraMovement.Direction.South;
+			break;
+		case "Right":
+			CameraMovement.moveDirection = CameraMovement.Direction.East;
+			break;
+		case "Left":
+			CameraMovement.moveDirection = CameraMovement.Direction.West;
+			break;
+		case "Stop":
+			CameraMovement.moveDirection = CameraMovement.Direction.Center;
+			break;
+		}
 	}
 		
 	private void Pause() {
@@ -128,8 +172,7 @@ public class VoiceController : Controller {
 	}
 		
 	private void Buy(string name) {
-		weapon_index = ModelManager.instance.SearchForWeapon(name);
-		Shop.instance.ProductOnHold(weapon_index);
+		this.WeaponIndex = Shop.instance.ProductOnHold(name);
 	}
 
 	private void Upgrade() {
@@ -150,9 +193,7 @@ public class VoiceController : Controller {
 	}
 
 	private void Sell() {
-		if (Controller.selected.GetComponent<DefenseTower>().GetTurret() != null) {
-			Shop.instance.SellTurret(Controller.selected);
-		}
+		Shop.instance.SellTurret(Controller.selected);
 	}
 		
 	private void PlaceOn(string name) {
@@ -160,7 +201,7 @@ public class VoiceController : Controller {
 		GameObject turret = ModelManager.instance.CreateWeapon(weapon_index, tower.GetChild(0)); 
 		tower.GetComponent<DefenseTower>().PlaceTurret(turret.transform);
 		Player.instance.ReduceGold(turret.GetComponent<Unit>().Cost);
-		weapon_index = -1;
+		this.WeaponIndex = -1;
 	}
 
 	protected override void UpdateLog() {
@@ -175,5 +216,4 @@ public class VoiceController : Controller {
 			Debug.Log ("Closed");
 		}
 	}
-
 }

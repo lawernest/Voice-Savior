@@ -7,14 +7,14 @@ public class MouseController : Controller {
 	private RaycastHit hitInfo;
 
 	// Use this for initialization
-	private void Awake () {
+	private void Start () {
 		this.hitInfo = new RaycastHit();
 	}
 	
 	// Update is called once per frame
 	private void Update () {
 		if (Input.GetMouseButtonDown (0)) {
-			bool hit = Physics.Raycast (CameraMovement.main_camera.ScreenPointToRay(Input.mousePosition), out this.hitInfo);
+			bool hit = Physics.Raycast (CameraMovement.mainCamera.ScreenPointToRay (Input.mousePosition), out this.hitInfo);
 			if(hit) {
 				//To-Do
 				if (this.hitInfo.transform.tag == "Weapon") {
@@ -27,7 +27,7 @@ public class MouseController : Controller {
 				Controller.selected = null;
 			}
 		} 
-	}	
+	}
 
 	protected override void UpdateLog() {
 

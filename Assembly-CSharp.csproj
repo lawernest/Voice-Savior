@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\DefenseTower.cs" />
      <Compile Include="Assets\Scripts\EnemyAI.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
+     <Compile Include="Assets\Scripts\GameLog.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\ModelManager.cs" />
      <Compile Include="Assets\Scripts\MouseController.cs" />

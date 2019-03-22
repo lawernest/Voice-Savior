@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour {
 			GameManager.instance.enemies_on_field--;
 		}
 		if (health_UI != null) {
-			UIManager.instance.FaceToCamera(health_UI.transform);
+			UIManager.FaceToCamera(health_UI.transform);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class Unit : MonoBehaviour {
 		this.current_hp -= damage;
 		if (health_bar != null) {
 			health_bar.fillAmount = current_hp / max_hp;
-			UIManager.instance.ChangeHealthBarColor(health_bar);
+			UIManager.ChangeHealthBarColor(health_bar);
 		}
 	}
 

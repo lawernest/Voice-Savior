@@ -14,7 +14,7 @@ public class DefenseTower : MonoBehaviour {
 	}
 
 	private void Update() {
-		label.transform.position = CameraMovement.main_camera.WorldToScreenPoint(new Vector3(this.transform.position.x, this.transform.position.y + 5.0f, this.transform.position.z));
+		label.transform.position = UIManager.LabelPosition(new Vector3 (this.transform.position.x, this.transform.position.y + 5.0f, this.transform.position.z));
 	}
 
 	public void PlaceTurret(Transform prefab) {

@@ -6,23 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
+	public enum Mode
+	{
+		Normal,
+		Timed
+	};
+
 	public static GameManager instance { get; private set; }
+
+	[Header("Game Mode")]
+	public Mode mode;
 
 	[HideInInspector] public int enemies_on_field;
 	[HideInInspector] public bool isPause { get; private set; }
 	[HideInInspector] public bool inGame { get; private set; }
-	private GameObject player_base;
+	[HideInInspector] public GameObject playerBase;
 	private GameObject waveManager;
-
-	public GameObject PlayerBase {
-		get {
-			return player_base;
-		}
-	}
-
-	[Header("Game Mode")]
-	public int mode = 0; //0 = Normal, 1 = Timed
-
+		
 	private void Awake() {
 		if (instance == null) {
 			instance = this;
@@ -34,20 +34,19 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void InitGame() {
-		//player_base = GameObject.Find("Player Base");
 		enemies_on_field = 0;
 		isPause = false;
 		inGame = false;
 
 		// Testing
 		inGame = true;
-		player_base = GameObject.Find ("Player Base");
+		playerBase = GameObject.Find ("Player Base");
 		waveManager = GameObject.Find ("Wave Manager");
 	}
 
 	private void Update() {
 		if (inGame) {
-			if (player_base == null) {
+			if (playerBase == null) {
 				Debug.Log ("Lose");
 				PauseGame();
 				//UIManager.instance.DisplayGameEndScene();
@@ -68,8 +67,8 @@ public class GameManager : MonoBehaviour {
 		}
 
 		inGame = true;
-		player_base = GameObject.Find ("Player Base");
-		waveManager = GameObject.Find ("Wave Manager");
+		playerBase = GameObject.Find("Player Base");
+		waveManager = GameObject.Find("Wave Manager");
 	}
 
 	public void PauseGame() {

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ModelManager : MonoBehaviour {
 
-	public static ModelManager instance;
+	public static ModelManager instance { get; private set; }
 
 	public GameObject[] enemyPrefabs;
 	public GameObject[] weaponPrefabs; // Store all the weapons prefab (except the one for upgrade)
 
 	// Use this for initialization
-	void Awake () {
+	private void Awake () {
 		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
@@ -36,7 +36,7 @@ public class ModelManager : MonoBehaviour {
 	}
 
 	public GameObject GetWeaponPrefab(int index) {
-		if (index >= 0 || index < weaponPrefabs.Length) {
+		if (index >= 0 && index < weaponPrefabs.Length) {
 			return this.weaponPrefabs[index];
 		}
 		return null;

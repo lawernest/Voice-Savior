@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	void Awake() {
+	private void Start() {
 		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour {
 		UpdateGoldText();
 	}
 
-	void UpdateGoldText() {
+	private void UpdateGoldText() {
 		this.goldText.text = this.gold.ToString();
 	}
 }
