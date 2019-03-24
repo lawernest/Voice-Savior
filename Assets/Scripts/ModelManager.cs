@@ -6,8 +6,14 @@ public class ModelManager : MonoBehaviour {
 
 	public static ModelManager instance { get; private set; }
 
-	public GameObject[] enemyPrefabs;
-	public GameObject[] weaponPrefabs; // Store all the weapons prefab (except the one for upgrade)
+	[SerializeField] private GameObject[] enemyPrefabs;
+	[SerializeField] private GameObject[] weaponPrefabs; // Store all the weapons prefab (except the one for upgrade)
+
+	public GameObject[] WeaponPrefabs {
+		get {
+			return weaponPrefabs;
+		}
+	}
 
 	// Use this for initialization
 	private void Awake () {

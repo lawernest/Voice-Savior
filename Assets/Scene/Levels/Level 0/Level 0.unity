@@ -248,7 +248,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 716037717}
+      - m_Target: {fileID: 1902519926}
         m_MethodName: BuyTurret
         m_Mode: 1
         m_Arguments:
@@ -1155,7 +1155,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 716037717}
+      - m_Target: {fileID: 1902519926}
         m_MethodName: BuyCannon
         m_Mode: 1
         m_Arguments:
@@ -1565,6 +1565,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   place_point: {fileID: 2043176684}
   label: {fileID: 920520799}
+--- !u!65 &363430451
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 363430447}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3923144, y: 10, z: 2.3923147}
+  m_Center: {x: -0.0016996268, y: -1.2438843, z: -0.013804439}
 --- !u!1001 &373678802
 Prefab:
   m_ObjectHideFlags: 0
@@ -1936,6 +1948,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   place_point: {fileID: 2100020682}
   label: {fileID: 927075202}
+--- !u!65 &534770053
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 534770049}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.392314, y: 10, z: 2.3923142}
+  m_Center: {x: -0.0016996264, y: -1.2438843, z: -0.013804436}
 --- !u!1 &538875907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,7 +2908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 0,1
   nextWaveTime: 10
   hpData:
@@ -2975,6 +2998,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   place_point: {fileID: 440837625}
   label: {fileID: 1633147709}
+--- !u!65 &768220413
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 768220409}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.392314, y: 10, z: 2.3923142}
+  m_Center: {x: -0.0016996264, y: -1.2438843, z: -0.013804436}
 --- !u!1 &777177951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3693,7 +3728,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &882641874
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3706,7 +3741,7 @@ RectTransform:
   m_Children:
   - {fileID: 994870960}
   m_Father: {fileID: 986145116}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -3757,7 +3792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899ed82bb8451394f9cde4776579ddf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logText: {fileID: 994870961}
 --- !u!1001 &895814455
 Prefab:
   m_ObjectHideFlags: 0
@@ -4136,7 +4170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 0,1
   nextWaveTime: 10
   hpData:
@@ -4231,8 +4264,8 @@ RectTransform:
   - {fileID: 62343051}
   - {fileID: 538875908}
   - {fileID: 463193152}
-  - {fileID: 1390103499}
   - {fileID: 882641874}
+  - {fileID: 1390103499}
   m_Father: {fileID: 918046901}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4346,7 +4379,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 248.7, y: 117}
+  m_SizeDelta: {x: 233.43, y: 99.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &994870961
 MonoBehaviour:
@@ -4380,7 +4413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &994870962
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4939,7 +4972,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 0,1
   nextWaveTime: 10
   hpData:
@@ -5311,7 +5343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 0,1
   nextWaveTime: 10
   hpData:
@@ -5475,6 +5506,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   place_point: {fileID: 955429385}
   label: {fileID: 565702629}
+--- !u!65 &1308209980
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1308209976}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3923144, y: 10, z: 2.3923147}
+  m_Center: {x: -0.0016996268, y: -1.2438843, z: -0.013804439}
 --- !u!1 &1339286250
 GameObject:
   m_ObjectHideFlags: 0
@@ -5679,9 +5722,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 1768812791599158, guid: a38f5a82401f12348be66e4823198b06, type: 2}
   - {fileID: 1174927786359716, guid: 4947cf54ffc3a79478e320a94d2d7a0c, type: 2}
-  weaponPrefabs:
-  - {fileID: 1612275403358568, guid: d20b7bc6b993bec43b42b2b0f462966a, type: 2}
-  - {fileID: 1104423783107346, guid: 3a29a48133ca4bc45845a3ae7d9166af, type: 2}
+  weaponPrefabs: []
 --- !u!4 &1380614209
 Transform:
   m_ObjectHideFlags: 0
@@ -5751,7 +5792,7 @@ RectTransform:
   m_Children:
   - {fileID: 275451003}
   m_Father: {fileID: 986145116}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5801,6 +5842,7 @@ GameObject:
   - component: {fileID: 1392712064}
   - component: {fileID: 1392712063}
   - component: {fileID: 1392712062}
+  - component: {fileID: 1392712065}
   m_Layer: 0
   m_Name: Castle
   m_TagString: Untagged
@@ -5864,6 +5906,18 @@ Transform:
   m_Father: {fileID: 66668225}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1392712065
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1392712061}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 76.105835, y: 78.26189, z: 38.09375}
+  m_Center: {x: 0.5647297, y: -0.08108902, z: 18.794586}
 --- !u!1 &1441810531
 GameObject:
   m_ObjectHideFlags: 0
@@ -6109,7 +6163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 0,1
   nextWaveTime: 10
   hpData:
@@ -6159,7 +6212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 0,1
   nextWaveTime: 10
   hpData:
@@ -6213,7 +6265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 0,1
   nextWaveTime: 10
   hpData:
@@ -6334,6 +6385,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   place_point: {fileID: 1563895896}
   label: {fileID: 2003678157}
+--- !u!65 &1530457721
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1530457717}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.392314, y: 10, z: 2.3923142}
+  m_Center: {x: -0.0016996264, y: -1.2438843, z: -0.013804436}
 --- !u!1001 &1545455049
 Prefab:
   m_ObjectHideFlags: 0
@@ -7429,7 +7492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 1,0,1,1
   nextWaveTime: 15
   hpData:
@@ -7740,7 +7802,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1834299486}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -7837,7 +7899,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 1,0,1,1,0,0
   nextWaveTime: 20
   hpData:
@@ -8027,7 +8088,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1902519924}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64c526a4b2a70a547a8681e78ab5e659, type: 3}
   m_Name: 
@@ -8132,7 +8193,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1903361882}
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 73.8, y: 19.45, z: 50.96}
+  m_LocalPosition: {x: 66.31, y: 19.45, z: 50.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9064,7 +9125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   enemySequence: 0,1
   nextWaveTime: 10
   hpData:

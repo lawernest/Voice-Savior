@@ -71,7 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4635132103375160}
   m_Layer: 0
-  m_Name: cannon_small
+  m_Name: cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -585,9 +585,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 4855944803109238}
-  laser: 0
+  useLaser: 0
   laserBeam: {fileID: 0}
-  bullet: 1
+  useBullet: 1
   ammoPrefab: {fileID: 4534545989528994, guid: eff3334482bb4f045b27718e0c85fadb, type: 2}
   fireRate: 0.8
 --- !u!114 &114987152675291416

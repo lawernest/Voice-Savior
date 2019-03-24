@@ -43,6 +43,7 @@ public class CameraMovement : MonoBehaviour {
 		// Get the mouse position when the player has left cliked
 		if (Input.GetMouseButtonDown(0)) {
 			dragPosition = Input.mousePosition;
+			Controller.selected = null;
 		}
 
 		// return when the player released the left click
@@ -59,6 +60,13 @@ public class CameraMovement : MonoBehaviour {
 			Mathf.Clamp (this.transform.position.x, MIN_X, MAX_X), 
 			this.transform.position.y, 
 			Mathf.Clamp (this.transform.position.z, MIN_Y, MAX_Y));
+	}
+
+	public void LookAt(Transform target) {
+		this.transform.position = new Vector3(
+			Mathf.Clamp (target.position.x, MIN_X, MAX_X), 
+			this.transform.position.y, 
+			Mathf.Clamp (target.position.z - 10, MIN_Y, MAX_Y));
 	}
 
 	private void Move() {

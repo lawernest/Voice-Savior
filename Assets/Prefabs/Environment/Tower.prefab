@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 33163618586811084}
   - component: {fileID: 23855213306997576}
   - component: {fileID: 114283982125007538}
+  - component: {fileID: 65004889888105594}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Defense Tower
@@ -117,6 +118,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1697863679852064}
   m_Mesh: {fileID: 4300000, guid: e49b65dc02c57ab46b9b8761bf56cbf3, type: 3}
+--- !u!65 &65004889888105594
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1697863679852064}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3923137, y: 5.71061, z: 2.392314}
+  m_Center: {x: -0.0016996263, y: -1.2438843, z: -0.013804435}
 --- !u!114 &114283982125007538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,3 +142,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   place_point: {fileID: 4678142932083500}
+  label: {fileID: 0}

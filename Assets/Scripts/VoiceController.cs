@@ -14,19 +14,11 @@ public class VoiceController : Controller {
 	};
 
 	public static VoiceController instance { get; private set; }
-	private int weapon_index = -1;
+
 	private List<string> commands_list;
 	private KeywordRecognizer recognizer;
 	private Command cur_command;
-
-	public int WeaponIndex {
-		get {
-			return weapon_index;
-		}
-		set {
-			weapon_index = value;
-		}
-	}
+	private CameraMovement mainCamera;
 
 	private void Start() {
 		if (instance == null) {
@@ -36,17 +28,16 @@ public class VoiceController : Controller {
 		}
 
 		// Initialize a list to store the commands
-		commands_list = new List<string>();
-		cur_command = Command.None;
+		this.commands_list = new List<string>();
+		this.cur_command = Command.None;
+		this.mainCamera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
 
-		// Add all required game commands to the commands_list
 		AddCommandsToList();
 
 		// Add the keywords to the recogniezr and set the confidence level
 		recognizer = new KeywordRecognizer(commands_list.ToArray(), ConfidenceLevel.Low);
 		recognizer.OnPhraseRecognized += OnKeywordsRecognized;
 
-		// Start the recognizer
 		recognizer.Start();
 	}
 
@@ -65,13 +56,14 @@ public class VoiceController : Controller {
 		// To-Do: Center camera to object
 
 		Transform towers = GameObject.Find("Towers").transform;
-		GameObject[] weapons = ModelManager.instance.weaponPrefabs;
+		GameObject[] weapons = ModelManager.instance.WeaponPrefabs;
 		string tower_name;
 
 		for (int i = 0; i < towers.childCount; i++) {
 			tower_name = towers.GetChild(i).name;
 			commands_list.Add("Select " + tower_name);
 			commands_list.Add("Place on " + tower_name);
+			commands_list.Add("Look " + tower_name);
 		}
 
 		for (int i = 0; i < weapons.Length; i++) {
@@ -89,8 +81,11 @@ public class VoiceController : Controller {
 			MoveCamera(words[1]);
 			cur_command = Command.None;
 			break;
+		case "Look": //To-Do
+			LookAt(words[1]);
+			break;
 		case "Stop":
-			MoveCamera ("Stop");
+			MoveCamera("Stop");
 			cur_command = Command.None;
 			break;
 		case "Pause":
@@ -107,7 +102,7 @@ public class VoiceController : Controller {
 			break;
 		case "Buy":
 			Buy(words[1]);
-			if (WeaponIndex!= -1) {
+			if (weaponIndex!= -1) {
 				cur_command = Command.Buy;
 			}
 			break;
@@ -116,7 +111,7 @@ public class VoiceController : Controller {
 			break;
 		}
 
-		if (WeaponIndex != -1) {
+		if (weaponIndex != -1) {
 			cur_command = Command.Buy;
 		}
 
@@ -139,6 +134,11 @@ public class VoiceController : Controller {
 		}
 	}
 
+	private void LookAt(string target) {
+		Transform tower = GameObject.Find(target).transform;
+		mainCamera.LookAt(tower);
+	}
+
 	private void MoveCamera(string direction) {
 		switch (direction) {
 		case "Up":
@@ -157,6 +157,7 @@ public class VoiceController : Controller {
 			CameraMovement.moveDirection = CameraMovement.Direction.Center;
 			break;
 		}
+		GameLog.instance.UpdateLog("Moving " + direction);
 	}
 		
 	private void Pause() {
@@ -167,12 +168,15 @@ public class VoiceController : Controller {
 		GameManager.instance.ResumeGame();
 	}
 
+	// select by tower name
 	private void Select(string name) {
 		Controller.selected = GameObject.Find(name);
+		GameLog.instance.UpdateLog("Selected Tower " + name);
 	}
 		
-	private void Buy(string name) {
-		this.WeaponIndex = Shop.instance.ProductOnHold(name);
+	protected override void Buy(string name) {
+		Controller.weaponIndex = Shop.instance.ProductOnHold(name);
+		GameLog.instance.UpdateLog("Purchased " + name);
 	}
 
 	private void Upgrade() {
@@ -193,20 +197,20 @@ public class VoiceController : Controller {
 	}
 
 	private void Sell() {
-		Shop.instance.SellTurret(Controller.selected);
+		int cost = Shop.instance.Sell(Controller.selected);
+		if (cost > 0) {
+			GameLog.instance.UpdateLog("recieved " + cost + " gold");
+		}
 	}
 		
 	private void PlaceOn(string name) {
 		Transform tower = GameObject.Find(name).transform;
-		GameObject turret = ModelManager.instance.CreateWeapon(weapon_index, tower.GetChild(0)); 
+		Shop.instance.Purchase (Controller.weaponIndex, tower);
+		/*GameObject turret = ModelManager.instance.CreateWeapon(Controller.weaponIndex, tower.GetChild(0)); 
 		tower.GetComponent<DefenseTower>().PlaceTurret(turret.transform);
-		Player.instance.ReduceGold(turret.GetComponent<Unit>().Cost);
-		this.WeaponIndex = -1;
+		Player.instance.ReduceGold(turret.GetComponent<Unit>().Cost);*/
+		Controller.weaponIndex = -1;
 	}
-
-	protected override void UpdateLog() {
-
-	}	
 
 	// Stop the recognizer before the application is closed
 	private void OnApplicationQuit() {

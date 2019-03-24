@@ -5,16 +5,32 @@ using UnityEngine.UI;
 
 public class GameLog : MonoBehaviour {
 
-	public Text logText;
-	public Queue<string> messages;
-	private const int MAX_MESSAGE =	5;
+	public static GameLog instance { get; private set; }
 
-	// Use this for initialization
+	private Text logText;
+	private Queue<string> messages;
+	private const int MAX_MESSAGE =	7;
+
 	private void Start () {
-		messages = new Queue<string>();
+		if (instance == null) {
+			instance = this;
+		} else if (instance != this) {
+			Destroy(this.gameObject);
+		}
+
+		this.messages = new Queue<string>();
+		this.logText = this.transform.GetChild(0).GetComponent<Text>();
 	}
 
-	public void UpdateLog() {
+	public void UpdateLog(string action) {
+		string message = "You have " + action;
 
+		this.messages.Enqueue(message);
+
+		if (messages.Count > MAX_MESSAGE) {
+			messages.Dequeue();
+		}
+
+		this.logText.text = string.Join ("\n", messages.ToArray());
 	}
 }

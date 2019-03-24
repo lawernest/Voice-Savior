@@ -23,15 +23,15 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	private void Update () {
 		if (GameManager.instance.isPause) return;
 
 		// Attack when it has reached the destination
 		if (this.transform.position.x == destination.position.x & this.transform.position.z == destination.position.z) {
 			if (target != null) {
-				this.damager.SetTarget(target);
+				this.damager.Target = target;
 			} else {
-				this.damager.SetTarget(null);
+				this.damager.Target = null;
 			}
 		}
 	}

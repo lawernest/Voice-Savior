@@ -57,10 +57,6 @@ public class Damager : MonoBehaviour {
 		}
 	}
 
-	public void SetTarget(Transform enemy) {
-		this.target = enemy;
-	}
-
 	private void FireBullet() {
 		Transform bulletPrefab = Instantiate(ammoPrefab, this.firePoint.position, this.firePoint.rotation);
 		Bullet bullet = bulletPrefab.GetComponent<Bullet>();
