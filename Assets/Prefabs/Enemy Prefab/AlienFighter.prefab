@@ -41,8 +41,8 @@ GameObject:
   - component: {fileID: 65431473050100800}
   - component: {fileID: 114718476126935688}
   - component: {fileID: 114188766973979602}
-  - component: {fileID: 114137874812022056}
   - component: {fileID: 114201827573607824}
+  - component: {fileID: 114137874812022056}
   m_Layer: 8
   m_Name: AlienFighter
   m_TagString: Enemy

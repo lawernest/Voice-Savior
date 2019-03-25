@@ -2607,7 +2607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 250
 --- !u!4 &721250011
@@ -3654,7 +3654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 250
 --- !u!4 &978004280
@@ -4451,7 +4451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 250
 --- !u!4 &1165806663
@@ -4742,7 +4742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 250
 --- !u!4 &1227538681
@@ -5555,7 +5555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 250
 --- !u!4 &1498887758
@@ -5604,7 +5604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 250
 --- !u!4 &1515094375
@@ -6719,9 +6719,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dcd073d9b96af84d98ee99ac3b21211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySequence: 1,0,1,1
+  enemySequence: 1,0,2,1
   nextWaveTime: 15
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 500
 --- !u!1 &1759992575
@@ -7124,7 +7124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 1,0,1,1,0,0
   nextWaveTime: 20
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 750
 --- !u!4 &1834954781
@@ -7307,7 +7307,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1902519924}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64c526a4b2a70a547a8681e78ab5e659, type: 3}
   m_Name: 
@@ -8198,7 +8198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData: 0
+  hpData: 100
   damageData: 0
   moneyDrop: 250
 --- !u!4 &2076265226
