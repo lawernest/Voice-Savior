@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 4647302703435812}
-  useLaser: 0
+  useLaser: 1
   laserBeam: {fileID: 120732865062873704}
   useBullet: 0
   ammoPrefab: {fileID: 0}

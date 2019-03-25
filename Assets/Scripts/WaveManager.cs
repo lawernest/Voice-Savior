@@ -15,7 +15,7 @@ public class WaveManager : MonoBehaviour {
 	[SerializeField] private Text counter;
 
 	private Transform enemyParent;
-	private const float normalWaitTime = 10.0f;
+	private const float normalWaitTime = 5.0f;
 	private float countdown;
 	private int waveNum;
 

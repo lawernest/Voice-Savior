@@ -35,6 +35,10 @@ public class Player : MonoBehaviour {
 		UpdateGoldText();
 	}
 
+	public bool EnoughGold(int cost) {
+		return (this.gold - cost >= 0);
+	}
+
 	private void UpdateGoldText() {
 		this.goldText.text = this.gold.ToString();
 	}

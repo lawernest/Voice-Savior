@@ -8,10 +8,17 @@ public class ModelManager : MonoBehaviour {
 
 	[SerializeField] private GameObject[] enemyPrefabs;
 	[SerializeField] private GameObject[] weaponPrefabs; // Store all the weapons prefab (except the one for upgrade)
+	[SerializeField] private GameObject[] towers;
 
 	public GameObject[] WeaponPrefabs {
 		get {
 			return weaponPrefabs;
+		}
+	}
+
+	public GameObject[] Towers {
+		get {
+			return towers;
 		}
 	}
 
@@ -44,6 +51,15 @@ public class ModelManager : MonoBehaviour {
 	public GameObject GetWeaponPrefab(int index) {
 		if (index >= 0 && index < weaponPrefabs.Length) {
 			return this.weaponPrefabs[index];
+		}
+		return null;
+	}
+
+	public GameObject GetTowerByName(string name) {
+		for (int i = 0; i < towers.Length; i++) {
+			if (towers[i].name == name) {
+				return towers[i];
+			}
 		}
 		return null;
 	}

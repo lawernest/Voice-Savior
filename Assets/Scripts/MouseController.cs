@@ -18,13 +18,13 @@ public class MouseController : Controller {
 		this.hitInfo = new RaycastHit();
 	}
 
-	// Update is called once per frame
+	// To-Do select weapon to upgrade/see
 	private void Update () {
 		if (Input.GetMouseButtonDown (0)) {
 			bool hit = Physics.Raycast (CameraMovement.mainCamera.ScreenPointToRay (Input.mousePosition), out this.hitInfo);
-			if(hit /*&& this.hitInfo.transform.tag == "Defense Tower"*/) {
+			if(hit && this.hitInfo.transform.tag == "Defense Tower") {
 				Controller.selected = this.hitInfo.transform.gameObject;
-				GameLog.instance.UpdateLog("Selected Tower " + Controller.selected.name);
+				GameLog.instance.UpdateLog("selected Tower " + Controller.selected.name);
 			} else {
 				Controller.selected = null;
 			}
@@ -32,15 +32,15 @@ public class MouseController : Controller {
 	}
 
 	public void BuyCannon() {
-		Buy("Cannon");
+		this.Buy("Cannon");
 	}
 
 	public void BuyTurret() {
-		Buy("Turret");
+		this.Buy("Turret");
 	}
 
 	protected override void Buy(string name) {
-		Controller.weaponIndex= Shop.instance.ProductOnHold(name);
-		GameLog.instance.UpdateLog("Purchased " + name);
+		Controller.weaponIndex = Shop.instance.ProductOnHold(name);
+		GameLog.instance.UpdateLog("purchased " + name);
 	}
 }

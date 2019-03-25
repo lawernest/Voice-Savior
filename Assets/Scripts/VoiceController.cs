@@ -1,4 +1,4 @@
-﻿using System; // for Action
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq; // for toArray
@@ -19,6 +19,15 @@ public class VoiceController : Controller {
 	private KeywordRecognizer recognizer;
 	private Command cur_command;
 	private CameraMovement mainCamera;
+
+	public Command command {
+		get {
+			return cur_command;
+		}
+		set {
+			cur_command = value;
+		}
+	}
 
 	private void Start() {
 		if (instance == null) {
@@ -47,20 +56,18 @@ public class VoiceController : Controller {
 		commands_list.Add("Upgrade");
 		commands_list.Add("Sell");
 		commands_list.Add("Cancel");
-		// To-Do: camera commands 
 		commands_list.Add("Move Up");
 		commands_list.Add("Move Down");
 		commands_list.Add("Move Left");
 		commands_list.Add("Move Right");
 		commands_list.Add ("Stop");
-		// To-Do: Center camera to object
 
-		Transform towers = GameObject.Find("Towers").transform;
+		GameObject[] towers = ModelManager.instance.Towers;
 		GameObject[] weapons = ModelManager.instance.WeaponPrefabs;
 		string tower_name;
 
-		for (int i = 0; i < towers.childCount; i++) {
-			tower_name = towers.GetChild(i).name;
+		for (int i = 0; i < towers.Length; i++) {
+			tower_name = towers[i].name;
 			commands_list.Add("Select " + tower_name);
 			commands_list.Add("Place on " + tower_name);
 			commands_list.Add("Look " + tower_name);
@@ -74,68 +81,67 @@ public class VoiceController : Controller {
 	private void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
 	{
 		Debug.Log ("Command: " + args.text);
-		String[] words = args.text.Split(' ');
+		string[] words = args.text.Split(' ');
 
-		switch (words[0]) {
-		case "Move":
-			MoveCamera(words[1]);
-			cur_command = Command.None;
-			break;
-		case "Look": //To-Do
-			LookAt(words[1]);
-			break;
-		case "Stop":
-			MoveCamera("Stop");
-			cur_command = Command.None;
-			break;
-		case "Pause":
+		if (words [0] == "Pause") {
 			Pause();
-			cur_command = Command.None;
-			break;
-		case "Resume":
-			Resume ();
-			cur_command = Command.None;
-			break;
-		case "Select":
-			Select (words[1]);
-			cur_command = Command.Select;
-			break;
-		case "Buy":
-			Buy(words[1]);
-			if (weaponIndex!= -1) {
+		}
+		if (words [0] == "Resume") {
+			Resume();
+		}
+
+		if (!GameManager.instance.isPause) {
+			switch (words [0]) {
+			case "Move":
+				MoveCamera (words [1]);
+				cur_command = Command.None;
+				break;
+			case "Look":
+				LookAt (words [1]);
+				break;
+			case "Stop":
+				MoveCamera ("Stop");
+				cur_command = Command.None;
+				break;
+			case "Select":
+				Select (words [1]);
+				break;
+			case "Buy":
+				Buy (words [1]);
+				break;
+			case "Cancel":
+				cur_command = Command.None;
+				break;
+			}
+				
+			if (Controller.selected != null) {
+				cur_command = Command.Select;
+			} else if (weaponIndex != -1) {
 				cur_command = Command.Buy;
 			}
-			break;
-		case "Cancel":
-			cur_command = Command.None;
-			break;
-		}
 
-		if (weaponIndex != -1) {
-			cur_command = Command.Buy;
-		}
-
-		switch (cur_command) {
-		case Command.Select:
-			if (words [0] == "Upgrade") {
-				Upgrade ();
-				cur_command = Command.None;
-			} else if (words [0] == "Sell") {
-				Sell ();
-				cur_command = Command.None;
+			switch (cur_command) {
+			case Command.Select:
+				if (words [0] == "Upgrade") {
+					Upgrade ();
+					cur_command = Command.None;
+				} else if (words [0] == "Sell") {
+					Sell ();
+					cur_command = Command.None;
+				}
+				break;
+			case Command.Buy:
+				if (words [0] == "Place") {
+					PlaceOn (words [2]);
+					cur_command = Command.None;
+				}
+				break;
 			}
-			break;
-		case Command.Buy:
-			if (words[0] == "Place") {
-				PlaceOn (words [2]);
-				cur_command = Command.None;
-			}
-			break;
 		}
 	}
 
 	private void LookAt(string target) {
-		Transform tower = GameObject.Find(target).transform;
+		Transform tower = ModelManager.instance.GetTowerByName(target).transform;
 		mainCamera.LookAt(tower);
 	}
 
@@ -170,30 +176,21 @@ public class VoiceController : Controller {
 
 	// select by tower name
 	private void Select(string name) {
-		Controller.selected = GameObject.Find(name);
-		GameLog.instance.UpdateLog("Selected Tower " + name);
+		Controller.selected = ModelManager.instance.GetTowerByName(name);
+		GameLog.instance.UpdateLog("selected Tower " + name);
 	}
 		
 	protected override void Buy(string name) {
 		Controller.weaponIndex = Shop.instance.ProductOnHold(name);
-		GameLog.instance.UpdateLog("Purchased " + name);
+		GameLog.instance.UpdateLog("purchased " + name);
 	}
 
 	private void Upgrade() {
-		/*if (MouseController.selected != null) {
-			selected_weapon = MouseController.selected;
-		} else {
-			selected_weapon = this.selected;
-		}*/
-
-		DefenseTower tower = Controller.selected.GetComponent<DefenseTower>();
-
-		if (Controller.selected != null) {
-			Upgrade upgrade = tower.GetTurret().GetComponent<Upgrade>();
-			if (upgrade.Upgradable()) {
-				upgrade.UpgradeUnit(tower);
-			}
-		}
+		bool success = Shop.instance.UpgradeWeapon(Controller.selected.transform);
+		if (success) {
+			GameLog.instance.UpdateLog("upgraded " + name);
+		} 
+		Controller.selected = null;
 	}
 
 	private void Sell() {
@@ -201,14 +198,17 @@ public class VoiceController : Controller {
 		if (cost > 0) {
 			GameLog.instance.UpdateLog("recieved " + cost + " gold");
 		}
+		Controller.selected = null;
 	}
 		
 	private void PlaceOn(string name) {
-		Transform tower = GameObject.Find(name).transform;
-		Shop.instance.Purchase (Controller.weaponIndex, tower);
-		/*GameObject turret = ModelManager.instance.CreateWeapon(Controller.weaponIndex, tower.GetChild(0)); 
-		tower.GetComponent<DefenseTower>().PlaceTurret(turret.transform);
-		Player.instance.ReduceGold(turret.GetComponent<Unit>().Cost);*/
+		Transform tower = ModelManager.instance.GetTowerByName(name).transform;
+		bool success = Shop.instance.Purchase (Controller.weaponIndex, tower);
+		if (success) {
+			GameLog.instance.UpdateLog ("placed on Tower " + name);
+		} else {
+			GameLog.instance.UpdateLog("placed a weapon on Tower " + name + " already");
+		}
 		Controller.weaponIndex = -1;
 	}
 

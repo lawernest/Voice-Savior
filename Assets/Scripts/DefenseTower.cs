@@ -9,6 +9,12 @@ public class DefenseTower : MonoBehaviour {
 	[SerializeField] private Text label;
 	private Transform turret = null;
 
+	public Transform Turret {
+		get {
+			return turret;
+		}
+	}
+
 	private void Start() {
 		this.turret = null;
 	}
@@ -17,12 +23,9 @@ public class DefenseTower : MonoBehaviour {
 		label.transform.position = UIManager.LabelPosition(new Vector3 (this.transform.position.x, this.transform.position.y + 5.0f, this.transform.position.z));
 	}
 
-	public void PlaceTurret(Transform prefab) {
-		this.turret = prefab;
-	}
-
-	public Transform GetTurret() {
-		return this.turret;
+	public void PlaceTurret(Transform turret) {
+		this.turret = turret;
+		turret.SetParent(this.transform);
 	}
 
 	public void RemoveTurret() {
