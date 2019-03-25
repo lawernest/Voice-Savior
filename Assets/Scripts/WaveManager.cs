@@ -96,7 +96,7 @@ public class WaveManager : MonoBehaviour {
 		Wave curWave = waves[waveNum];
 
 		// Initialization
-		unit.Initialize(curWave.hpData[prefabIndex], curWave.damageData[prefabIndex], curWave.moneyDrop);
+		unit.Initialize(curWave.hpData, curWave.damageData, curWave.moneyDrop);
 		enemy_ai.Initialize(destination, GameManager.instance.playerBase.transform);
 		newEnemy.transform.SetParent(enemyParent);
 		newEnemy.SetActive(true);

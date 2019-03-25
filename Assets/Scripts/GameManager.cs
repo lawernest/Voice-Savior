@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
 		if (inGame) {
 			if (playerBase == null) {
 				Debug.Log ("Lose");
-				PauseGame();
+				//PauseGame();
 				//UIManager.instance.DisplayGameEndScene();
 			}
 			if (!waveManager.activeSelf && enemies_on_field == 0) {

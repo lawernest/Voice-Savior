@@ -24,25 +24,25 @@ public class Unit : MonoBehaviour {
 		}
 	}
 
-	private void Start() {
+	protected virtual void Start() {		
 		this.current_hp = this.max_hp;
 		if (health_UI != null) {
-			//this.health_UI.gameObject.SetActive (true);
 			health_bar = health_UI.transform.GetChild(1).GetComponent<Image>();
 		}
 	}
 		
-	public void Initialize(float hp, float damage, int cost) {
+	public virtual void Initialize(float hp, float damage, int cost) {
 		this.max_hp = hp;
 		this.damage = damage;
 		this.cost = cost;
 	}
 
-	private void Update() {
-		if (GameManager.instance.isPause) 
+	protected virtual void Update() {
+		if (GameManager.instance.isPause) {
 			return;
+		}
 
-		if (this.isDead() && this.tag == "Enemy") {
+		if (isDead() && this.tag == "Enemy") {
 			Player.instance.IncreaseGold(this.cost);
 			GameManager.instance.enemies_on_field--;
 		}

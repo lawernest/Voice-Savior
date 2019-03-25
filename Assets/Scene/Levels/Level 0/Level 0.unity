@@ -1767,7 +1767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 7.9000244, y: 0}
+  m_AnchoredPosition: {x: 7.8999023, y: 0}
   m_SizeDelta: {x: 59.5, y: 25.5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &538875909
@@ -2607,12 +2607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
+  hpData: 0
+  damageData: 0
   moneyDrop: 250
 --- !u!4 &721250011
 Transform:
@@ -3658,12 +3654,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
+  hpData: 0
+  damageData: 0
   moneyDrop: 250
 --- !u!4 &978004280
 Transform:
@@ -4459,12 +4451,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
+  hpData: 0
+  damageData: 0
   moneyDrop: 250
 --- !u!4 &1165806663
 Transform:
@@ -4754,12 +4742,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
+  hpData: 0
+  damageData: 0
   moneyDrop: 250
 --- !u!4 &1227538681
 Transform:
@@ -5526,12 +5510,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
+  hpData: 100
+  damageData: 10
   moneyDrop: 250
 --- !u!4 &1492958931
 Transform:
@@ -5575,12 +5555,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
+  hpData: 0
+  damageData: 0
   moneyDrop: 250
 --- !u!4 &1498887758
 Transform:
@@ -5628,12 +5604,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
+  hpData: 0
+  damageData: 0
   moneyDrop: 250
 --- !u!4 &1515094375
 Transform:
@@ -6749,12 +6721,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 1,0,1,1
   nextWaveTime: 15
-  hpData:
-  - 120
-  - 100
-  damageData:
-  - 10
-  - 5
+  hpData: 0
+  damageData: 0
   moneyDrop: 500
 --- !u!1 &1759992575
 GameObject:
@@ -7156,12 +7124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 1,0,1,1,0,0
   nextWaveTime: 20
-  hpData:
-  - 120
-  - 100
-  damageData:
-  - 10
-  - 5
+  hpData: 0
+  damageData: 0
   moneyDrop: 750
 --- !u!4 &1834954781
 Transform:
@@ -7343,7 +7307,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1902519924}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64c526a4b2a70a547a8681e78ab5e659, type: 3}
   m_Name: 
@@ -8234,12 +8198,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySequence: 0,1
   nextWaveTime: 10
-  hpData:
-  - 500
-  - 150
-  damageData:
-  - 15
-  - 10
+  hpData: 0
+  damageData: 0
   moneyDrop: 250
 --- !u!4 &2076265226
 Transform:

@@ -10,7 +10,7 @@ public class Wave : MonoBehaviour {
 
 	[Header("Enemy Setting")]
 	// enemy status for this wave
-	public float[] hpData;
-	public float[] damageData;
+	public float hpData;
+	public float damageData;
 	public int moneyDrop;
 }
