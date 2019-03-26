@@ -24,7 +24,9 @@ public class EnemyAI : MonoBehaviour {
 
 	// Update is called once per frame
 	private void Update () {
-		if (GameManager.instance.isPause) return;
+		if (GameManager.instance.isPause) {
+			return;
+		}
 
 		// Attack when it has reached the destination
 		if (this.transform.position.x == destination.position.x & this.transform.position.z == destination.position.z) {

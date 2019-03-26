@@ -15,20 +15,22 @@ public class WaveManager : MonoBehaviour {
 	[SerializeField] private Text counter;
 
 	private Transform enemyParent;
-	private const float normalWaitTime = 5.0f;
+	private const float normalWaitTime = 6.0f;
 	private float countdown;
 	private int waveNum;
+	private bool isLast;
 
 	private delegate void WaveMode();
 	private WaveMode startWave;
 
 	private void Start() {
 		this.enemyParent = GameObject.Find("Enemy").transform;
-		this.waveNum = 0;
+		this.waveNum = 1;
 		this.countdown = normalWaitTime;
+		this.isLast = false;
 		UpdateWaveText();
 
-		if (GameManager.instance.mode == GameManager.Mode.Timed) {
+		if (GameManager.instance.GameMode == GameManager.Mode.Timed) {
 			startWave = new WaveMode(TimedWave);
 		} else {
 			startWave = new WaveMode(NormalWave);
@@ -41,38 +43,49 @@ public class WaveManager : MonoBehaviour {
 			return;
 		}
 
-		if (this.waveNum >= this.waves.Length) {
-			this.gameObject.SetActive (false);
+		if (this.waveNum > this.waves.Length) {
+			this.gameObject.SetActive(false);
 		}
 
-		startWave ();
+		startWave();
 	}
 
 	// Initialize the wave
 	IEnumerator InitWave() {
 		int index;
-		string[] sequence = this.waves[waveNum].enemySequence.Split(',');
+		string[] sequence = this.waves[waveNum-1].enemySequence.Split(',');
+
+		if (GameManager.instance.GameMode == GameManager.Mode.Timed && this.waveNum >= this.waves.Length) {
+			this.isLast = true;
+		}
 
 		foreach (string type in sequence) {
 			index = System.Int32.Parse(type);
 			SpawnEnemy(index);
 			GameManager.instance.enemies_on_field++;
-			yield return new WaitForSeconds(1.0f); 
+			yield return new WaitForSeconds(2.0f); 
 		}
-			
-		this.waveNum++;
+
+		if (this.waveNum <= this.waves.Length) {
+			this.waveNum++;
+		}
 	}
 
 	// Wave start according to time
 	private void TimedWave() {
 		if (countdown <= 0.0f) {
 			StartCoroutine(InitWave());
-			countdown = waves[waveNum].nextWaveTime;
+			countdown = waves[waveNum-1].nextWaveTime;
 			UpdateWaveText();
 		}
+			
+		if (!this.isLast) {
+			countdown -= Time.deltaTime;
+			UpdateCounter();
+		} else {
+			this.counter.gameObject.SetActive(false);
+		}
 
-		countdown -= Time.deltaTime;
-		UpdateCounter();
 	}
 
 	// Wave start after all enemies are clear 
@@ -93,7 +106,7 @@ public class WaveManager : MonoBehaviour {
 		GameObject newEnemy = ModelManager.instance.CreateEnemy(prefabIndex, spawnPoint);
 		EnemyAI enemy_ai = newEnemy.GetComponent<EnemyAI>();
 		Unit unit = newEnemy.GetComponent<Unit>();
-		Wave curWave = waves[waveNum];
+		Wave curWave = waves[waveNum-1];
 
 		// Initialization
 		unit.Initialize(curWave.hpData, curWave.damageData, curWave.moneyDrop);
@@ -103,7 +116,7 @@ public class WaveManager : MonoBehaviour {
 	}
 
 	private void UpdateWaveText() {
-		this.waveText.text = "Wave " + (waveNum + 1) + "/" + waves.Length;
+		this.waveText.text = "Wave " + waveNum + "/" + waves.Length;
 	}
 
 	private void UpdateCounter() {
@@ -111,7 +124,7 @@ public class WaveManager : MonoBehaviour {
 			this.counter.gameObject.SetActive(true);
 		}
 		this.counter.text = UIManager.TimeFormat(countdown);
-		if (this.countdown <= 0.0f && GameManager.instance.mode == GameManager.Mode.Normal) {
+		if (this.countdown <= 0.0f && GameManager.instance.GameMode == GameManager.Mode.Normal) {
 			this.counter.gameObject.SetActive(false);
 		}
 	}

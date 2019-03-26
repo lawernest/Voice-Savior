@@ -32,7 +32,9 @@ public class PlayerAI : MonoBehaviour {
 		}
 
 		FindTheClosestTarget(enemies);
-		LookAtTarget();
+		if (target != null) {
+			LookAtTarget();
+		}
 	}
 
 	// Find the closest target to attack

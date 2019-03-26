@@ -313,9 +313,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 4307153168253498}
-  laser: 0
+  useLaser: 0
   laserBeam: {fileID: 0}
-  bullet: 1
+  useBullet: 1
   ammoPrefab: {fileID: 4649879983618820, guid: f424df1fb8c377d4bb3008abd754771f, type: 2}
   fireRate: 5
 --- !u!114 &114105825140183192
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_hp: 1000
   cost: 500
-  damage: 35
+  damage: 12
   health_UI: {fileID: 0}
 --- !u!137 &137517831531676466
 SkinnedMeshRenderer:

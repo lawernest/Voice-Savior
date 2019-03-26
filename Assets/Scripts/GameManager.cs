@@ -15,13 +15,20 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance { get; private set; }
 
 	[Header("Game Mode")]
-	public Mode mode;
+	[SerializeField] private Mode mode;
 
 	[HideInInspector] public int enemies_on_field;
 	[HideInInspector] public bool isPause { get; private set; }
 	[HideInInspector] public bool inGame { get; private set; }
 	[HideInInspector] public GameObject playerBase;
 	private GameObject waveManager;
+	private float countDown;
+
+	public Mode GameMode {
+		get {
+			return mode;
+		}
+	}
 		
 	private void Awake() {
 		if (instance == null) {
@@ -37,6 +44,7 @@ public class GameManager : MonoBehaviour {
 		enemies_on_field = 0;
 		isPause = false;
 		inGame = false;
+		countDown = 1.2f;
 
 		// Testing
 		inGame = true;
@@ -47,9 +55,12 @@ public class GameManager : MonoBehaviour {
 	private void Update() {
 		if (inGame) {
 			if (playerBase == null) {
-				Debug.Log ("Lose");
-				//PauseGame();
-				//UIManager.instance.DisplayGameEndScene();
+				this.countDown -= Time.deltaTime;
+				if(this.countDown <= 0.0f) {
+					Debug.Log ("Lose");
+					//PauseGame();
+					//UIManager.instance.DisplayGameEndScene();
+				}
 			}
 			if (!waveManager.activeSelf && enemies_on_field == 0) {
 				Debug.Log ("Win");

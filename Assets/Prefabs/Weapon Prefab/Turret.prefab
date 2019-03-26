@@ -529,5 +529,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max_hp: 1000
   cost: 100
-  damage: 20
+  damage: 4
   health_UI: {fileID: 0}

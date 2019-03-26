@@ -9,7 +9,7 @@ public class Boss : Unit {
 	}
 
 	public override void Initialize(float hp, float damage, int cost) {
-		base.Initialize(hp * 2, damage * 2, cost);
+		base.Initialize(hp * 4, damage * 2, cost);
 	}
 		
 	protected override void Update () {
