@@ -14,6 +14,7 @@ public class CameraMovement : MonoBehaviour {
 
 	public static Camera mainCamera;
 	public static Direction moveDirection;
+	public static bool movable;
 
 	[Header("Camera Setting")]
 	[SerializeField] private float dragSpeed = 1.5f;
@@ -26,6 +27,7 @@ public class CameraMovement : MonoBehaviour {
 	private void Start() {
 		CameraMovement.mainCamera = Camera.main;
 		CameraMovement.moveDirection = Direction.Center;
+		CameraMovement.movable = true;
 	}
 
 	// Update is called once per frame
@@ -37,6 +39,10 @@ public class CameraMovement : MonoBehaviour {
 		// For voice control
 		if (moveDirection != Direction.Center) {
 			Move();
+			return;
+		}
+
+		if (!CameraMovement.movable) {
 			return;
 		}
 

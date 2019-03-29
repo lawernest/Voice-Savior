@@ -29,13 +29,13 @@ public class VoiceController : Controller {
 		}
 	}
 
-	private void Start() {
+	protected override void Start() {
+		base.Start();
 		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
 			Destroy(this.gameObject);
 		}
-
 		// Initialize a list to store the commands
 		this.commands_list = new List<string>();
 		this.cur_command = Command.None;
@@ -91,6 +91,7 @@ public class VoiceController : Controller {
 		}
 
 		if (!GameManager.instance.isPause) {
+			MoveCamera("Stop"); // stop the camera whenever a new commands is requested
 			switch (words [0]) {
 			case "Move":
 				MoveCamera (words [1]);
@@ -163,7 +164,9 @@ public class VoiceController : Controller {
 			CameraMovement.moveDirection = CameraMovement.Direction.Center;
 			break;
 		}
-		GameLog.instance.UpdateLog("Moving " + direction);
+		if (direction != "Stop") {
+			GameLog.instance.UpdateLog ("Moving " + direction);
+		}
 	}
 		
 	private void Pause() {

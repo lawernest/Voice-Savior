@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseController : Controller {
 
@@ -8,27 +9,31 @@ public class MouseController : Controller {
 	private RaycastHit hitInfo;
 
 	// Use this for initialization
-	private void Start () {
+	protected override void Start () {
+		//base.Start();
 		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
 			Destroy(this.gameObject);
 		}
-
 		this.hitInfo = new RaycastHit();
 	}
 
 	// To-Do select weapon to upgrade/see
 	private void Update () {
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown(0)) {
 			bool hit = Physics.Raycast (CameraMovement.mainCamera.ScreenPointToRay (Input.mousePosition), out this.hitInfo);
-			if(hit && this.hitInfo.transform.tag == "Defense Tower") {
+			if(hit && this.hitInfo.transform.tag == "Defense Tower" && !EventSystem.current.IsPointerOverGameObject()) {
+				CameraMovement.movable = false;
 				Controller.selected = this.hitInfo.transform.gameObject;
 				GameLog.instance.UpdateLog("selected Tower " + Controller.selected.name);
+				ShowWeaponInfo(true);
 			} else {
+				CameraMovement.movable = true;
 				Controller.selected = null;
+				ShowWeaponInfo(false);
 			}
-		} 
+		}
 	}
 
 	public void BuyCannon() {
