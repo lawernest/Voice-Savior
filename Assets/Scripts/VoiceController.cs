@@ -1,12 +1,10 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq; // for toArray
 using UnityEngine;
 using UnityEngine.Windows.Speech; // For speech recognition
 
 public class VoiceController : Controller {
-
 	public enum Command { 
 		None, 
 		Select,
@@ -14,43 +12,63 @@ public class VoiceController : Controller {
 	};
 
 	public static VoiceController instance { get; private set; }
-
-	private List<string> commands_list;
 	private KeywordRecognizer recognizer;
-	private Command cur_command;
-	private CameraMovement mainCamera;
+	private Command cur_command = Command.None;
+	public CameraMovement mainCamera;
+	private List<string> commands_list;
 
 	public Command command {
-		get {
-			return cur_command;
-		}
-		set {
-			cur_command = value;
-		}
+		get { return cur_command; }
+		set { cur_command = value; }
 	}
 
-	protected override void Start() {
-		base.Start();
+	private void Start() {
 		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
 			Destroy(this.gameObject);
 		}
-		// Initialize a list to store the commands
-		this.commands_list = new List<string>();
-		this.cur_command = Command.None;
-		this.mainCamera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
+			
+		PhraseRecognitionSystem.OnError += EncounterError;
+		commands_list = new List<string>();
+		AddBasicCommand();
 
-		AddCommandsToList();
+		StartRecognitionSystem();
+	}
 
-		// Add the keywords to the recogniezr and set the confidence level
+	private void Update() {
+		if(recognizer != null && !recognizer.IsRunning && GameManager.instance.inGame()) {
+			AddCommandsforCurrentLevel();
+			StartRecognitionSystem();
+		}
+	}
+
+	private bool CheckKeywordInList(string keyword) {
+		return recognizer.Keywords.Contains(keyword);
+	}
+
+	private void StartRecognitionSystem() {
+		StopRecognitionSystem();
 		recognizer = new KeywordRecognizer(commands_list.ToArray(), ConfidenceLevel.Low);
 		recognizer.OnPhraseRecognized += OnKeywordsRecognized;
 
-		recognizer.Start();
+		#if UNITY_STANDALONE_WIN
+			recognizer.Start();
+		#endif
 	}
 
-	private void AddCommandsToList() {
+	public void StopRecognitionSystem() {
+		if (recognizer != null && recognizer.IsRunning) {
+			recognizer.OnPhraseRecognized -= OnKeywordsRecognized;
+			recognizer.Dispose(); // remove the recognizer
+		}
+	}
+
+	private void AddBasicCommand() {
+		commands_list.Add("Play Normal");
+		commands_list.Add("Play Timed");
+		commands_list.Add("Quit");
+		commands_list.Add("Continue");
 		commands_list.Add("Pause");
 		commands_list.Add("Resume");
 		commands_list.Add("Upgrade");
@@ -60,85 +78,132 @@ public class VoiceController : Controller {
 		commands_list.Add("Move Down");
 		commands_list.Add("Move Left");
 		commands_list.Add("Move Right");
-		commands_list.Add ("Stop");
+		commands_list.Add("Stop");
+	}
 
+	private void AddCommandsforCurrentLevel() {
 		GameObject[] towers = ModelManager.instance.Towers;
 		GameObject[] weapons = ModelManager.instance.WeaponPrefabs;
-		string tower_name;
 
 		for (int i = 0; i < towers.Length; i++) {
-			tower_name = towers[i].name;
-			commands_list.Add("Select " + tower_name);
-			commands_list.Add("Place on " + tower_name);
-			commands_list.Add("Look " + tower_name);
+			string tower_name = towers[i].name;
+			if (!CheckKeywordInList ("Select " + tower_name)) {
+				commands_list.Add("Select " + tower_name);
+			} 
+			if (!CheckKeywordInList ("Place on " + tower_name)) {
+				commands_list.Add("Place on " + tower_name);
+			}
+			if (!CheckKeywordInList("Look " + tower_name)) {
+				commands_list.Add("Look " + tower_name);
+			}
 		}
 
 		for (int i = 0; i < weapons.Length; i++) {
-			commands_list.Add("Buy " + weapons[i].name);
+			if (!CheckKeywordInList ("Buy " + weapons[i].name)) {
+				commands_list.Add("Buy " + weapons[i].name);
+			}
 		}
 	}
 
-	private void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
-	{
-		Debug.Log ("Command: " + args.text);
+
+	private void OnKeywordsRecognized(PhraseRecognizedEventArgs args) {
 		string[] words = args.text.Split(' ');
 
-		if (words [0] == "Pause") {
-			Pause();
-		}
-		if (words [0] == "Resume") {
-			Resume();
-		}
-
-		if (!GameManager.instance.isPause) {
+		if (GameManager.instance.isOnStartMenu()) {
+			if (args.text == "Play Normal") {
+				GameManager.instance.StartGameInNormalMode();
+			}
+			else if (args.text == "Play Timed") {
+				GameManager.instance.StartGameInTimedMode();
+			}
+			else if (words [0] == "Quit") {
+				GameManager.instance.QuitGame ();
+			}
+		} else if (GameManager.instance.isOnEndMenu()) {
+			if (words [0] == "Continue") {
+				GameManager.instance.DisplayTitleScene();
+			}
+		} else if (GameManager.instance.isPause()) {
+			if (words [0] == "Resume") {
+				GameLog.instance.UpdateLog(args.text);
+				GameManager.instance.ResumeGame();
+			}
+		} else if(GameManager.instance.inGame()) {
 			MoveCamera("Stop"); // stop the camera whenever a new commands is requested
-			switch (words [0]) {
+			switch (words[0]) {
+			case "Pause":
+				GameLog.instance.UpdateLog(args.text);
+				GameManager.instance.PauseGame();
+				break;
 			case "Move":
-				MoveCamera (words [1]);
-				cur_command = Command.None;
+				GameLog.instance.UpdateLog(args.text);
+				MoveCamera(words [1]);
+				ResetCommand();
 				break;
 			case "Look":
+				GameLog.instance.UpdateLog(args.text);
 				LookAt (words [1]);
+				ResetCommand();
 				break;
 			case "Stop":
-				MoveCamera ("Stop");
-				cur_command = Command.None;
+				GameLog.instance.UpdateLog(args.text);
+				ResetCommand();
 				break;
 			case "Select":
-				Select (words [1]);
+				GameLog.instance.UpdateLog(args.text);
+				Select(words[1]);
 				break;
 			case "Buy":
-				Buy (words [1]);
+				GameLog.instance.UpdateLog(args.text);
+				Buy(words[1]);
 				break;
 			case "Cancel":
-				cur_command = Command.None;
+				GameLog.instance.UpdateLog(args.text);
+				ResetCommand();
+				break;
+			default:
 				break;
 			}
-				
-			if (Controller.selected != null) {
-				cur_command = Command.Select;
-			} else if (weaponIndex != -1) {
+
+			if (cur_command == Command.None) {
+				UIManager.ShowWeaponInfo(false);
+			}
+
+			if (weaponIndex > -1) {
 				cur_command = Command.Buy;
 			}
 
 			switch (cur_command) {
 			case Command.Select:
 				if (words [0] == "Upgrade") {
-					Upgrade ();
-					cur_command = Command.None;
+					GameLog.instance.UpdateLog(args.text);
+					Upgrade();
+					UIManager.ShowWeaponInfo(false);
+					ResetCommand();
 				} else if (words [0] == "Sell") {
-					Sell ();
-					cur_command = Command.None;
+					GameLog.instance.UpdateLog(args.text);
+					Sell();
+					UIManager.ShowWeaponInfo(false);
+					ResetCommand();
 				}
 				break;
 			case Command.Buy:
-				if (words [0] == "Place") {
+				if (words[0] == "Place") {
+					GameLog.instance.UpdateLog(args.text);
 					PlaceOn (words [2]);
-					cur_command = Command.None;
+					ResetCommand();
 				}
+				break;
+			default:
 				break;
 			}
 		}
+	}
+
+	private void ResetCommand() {
+		cur_command = Command.None;
+		Controller.selected = null;
+		Controller.weaponIndex = -1;
 	}
 
 	private void LookAt(string target) {
@@ -146,7 +211,7 @@ public class VoiceController : Controller {
 		mainCamera.LookAt(tower);
 	}
 
-	private void MoveCamera(string direction) {
+	public void MoveCamera(string direction) {
 		switch (direction) {
 		case "Up":
 			CameraMovement.moveDirection = CameraMovement.Direction.North;
@@ -164,63 +229,55 @@ public class VoiceController : Controller {
 			CameraMovement.moveDirection = CameraMovement.Direction.Center;
 			break;
 		}
-		if (direction != "Stop") {
-			GameLog.instance.UpdateLog ("Moving " + direction);
-		}
-	}
-		
-	private void Pause() {
-		GameManager.instance.PauseGame();
-	}
-
-	private void Resume() {
-		GameManager.instance.ResumeGame();
 	}
 
 	// select by tower name
 	private void Select(string name) {
 		Controller.selected = ModelManager.instance.GetTowerByName(name);
-		GameLog.instance.UpdateLog("selected Tower " + name);
+		if (Controller.selected != null) {
+			cur_command = Command.Select;
+			LookAt(name);
+			UIManager.ShowWeaponInfo(true);
+		}
+
 	}
 		
-	protected override void Buy(string name) {
+	public override void Buy(string name) {
 		Controller.weaponIndex = Shop.instance.ProductOnHold(name);
-		GameLog.instance.UpdateLog("purchased " + name);
 	}
 
 	private void Upgrade() {
 		bool success = Shop.instance.UpgradeWeapon(Controller.selected.transform);
 		if (success) {
-			GameLog.instance.UpdateLog("upgraded " + name);
-		} 
-		Controller.selected = null;
+			LookAt(Controller.selected.name);
+		}
 	}
 
 	private void Sell() {
 		int cost = Shop.instance.Sell(Controller.selected);
 		if (cost > 0) {
-			GameLog.instance.UpdateLog("recieved " + cost + " gold");
+			GameLog.instance.UpdateLog("Recieved " + cost + " gold");
 		}
-		Controller.selected = null;
 	}
 		
 	private void PlaceOn(string name) {
 		Transform tower = ModelManager.instance.GetTowerByName(name).transform;
-		bool success = Shop.instance.Purchase (Controller.weaponIndex, tower);
-		if (success) {
-			GameLog.instance.UpdateLog ("placed on Tower " + name);
+		bool success = Shop.instance.Purchase(Controller.weaponIndex, tower);
+		if (!success) {
+			GameLog.instance.UpdateLog ("Tower " + name + " already has a turret");
 		} else {
-			GameLog.instance.UpdateLog("placed a weapon on Tower " + name + " already");
+			LookAt(name);
 		}
 		Controller.weaponIndex = -1;
 	}
 
+	private void EncounterError(SpeechError code) {
+		GameManager.instance.QuitGame();
+	}
+
 	// Stop the recognizer before the application is closed
 	private void OnApplicationQuit() {
-		if (recognizer != null && recognizer.IsRunning) {
-			recognizer.OnPhraseRecognized -= OnKeywordsRecognized;
-			recognizer.Stop();
-			Debug.Log ("Closed");
-		}
+		StopRecognitionSystem();
+		Debug.Log ("Closed");
 	}
 }

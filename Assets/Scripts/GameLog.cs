@@ -23,8 +23,7 @@ public class GameLog : MonoBehaviour {
 	}
 
 	public void UpdateLog(string action) {
-		string message = "You have " + action;
-
+		string message = "Command: " + action;
 		this.messages.Enqueue(message);
 
 		if (messages.Count > MAX_MESSAGE) {

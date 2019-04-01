@@ -31,7 +31,7 @@ public class Shop : MonoBehaviour {
 		if (selectedTower.Turret == null) {
 			GameObject turret = ModelManager.instance.CreateWeapon(Controller.weaponIndex, tower.GetChild (0)); 
 			selectedTower.PlaceTurret(turret.transform);
-			Player.instance.ReduceGold(turret.GetComponent<Unit> ().Cost);
+			Player.instance.ReduceGold(turret.GetComponent<Unit>().Cost);
 			return true;
 		}
 		return false;
@@ -59,5 +59,13 @@ public class Shop : MonoBehaviour {
 			defense_tower.RemoveTurret();
 		}
 		return gold;
+	}
+
+	public void BuyCannon() {
+		MouseController.instance.Buy("Cannon");
+	}
+
+	public void BuyTurret() {
+		MouseController.instance.Buy("Turret");
 	}
 }

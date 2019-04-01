@@ -28,4 +28,26 @@ public class UIManager {
 
 		return string.Format("{0:00}:{1:00}", minutes, seconds);
 	}
+
+	public static string DisplayWaveText(int curWave, int total) {
+		return "Wave " + curWave + "/" + total;
+	}
+
+	public static void ShowWeaponInfo(bool show) {
+		Controller.weaponInfo.SetActive (false);
+		if (show && Controller.selected != null) {
+			DefenseTower tower = Controller.selected.GetComponent<DefenseTower>();
+			if (tower.Turret != null) {
+				Text upgradePrice = Controller.weaponInfo.transform.GetChild (1).GetChild (0).GetComponent<Text> ();
+				Text goldObtain = Controller.weaponInfo.transform.GetChild (2).GetChild (0).GetComponent<Text> ();
+				Upgrade weapon = tower.Turret.GetComponent<Upgrade> ();
+
+				upgradePrice.text = weapon.Upgradable () ? weapon.UpgradeCost + " Gold" : "N/A";
+				goldObtain.text = ((int)tower.Turret.GetComponent<Unit> ().Cost / 2) + " Gold";
+
+				Controller.weaponInfo.transform.position = CameraMovement.mainCamera.WorldToScreenPoint (tower.transform.position) + new Vector3 (0.0f, 80.0f);
+				Controller.weaponInfo.SetActive (true);
+			}
+		}
+	}
 }

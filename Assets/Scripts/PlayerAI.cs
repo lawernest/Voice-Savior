@@ -16,8 +16,9 @@ public class PlayerAI : MonoBehaviour {
 
 	// Update is called once per frame
 	private void Update () {
-		if (GameManager.instance.isPause)
+		if (GameManager.instance.isPause ()) {
 			return;
+		}
 
 		SearchEnemy();
 		this.damager.Target = target;

@@ -15,10 +15,6 @@ public class DefenseTower : MonoBehaviour {
 		}
 	}
 
-	private void Start() {
-		this.turret = null;
-	}
-
 	private void Update() {
 		label.transform.position = UIManager.LabelPosition(new Vector3 (this.transform.position.x, this.transform.position.y + 5.0f, this.transform.position.z));
 	}

@@ -15,7 +15,7 @@ public class Explosion : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-		if (GameManager.instance.isPause) {
+		if (GameManager.instance.isPause()) {
 			return;
 		}
 

@@ -36,13 +36,11 @@ public class WaveManager : MonoBehaviour {
 			startWave = new WaveMode(NormalWave);
 		}
 	}
-
-	// Update is called once per frame
+		
 	private void Update() {
-		if (GameManager.instance.isPause) {
+		if (GameManager.instance.isPause()) {
 			return;
 		}
-
 		if (this.waveNum > this.waves.Length) {
 			this.gameObject.SetActive(false);
 		}
@@ -61,7 +59,7 @@ public class WaveManager : MonoBehaviour {
 
 		foreach (string type in sequence) {
 			index = System.Int32.Parse(type);
-			SpawnEnemy(index);
+			SpawnEnemy (index);
 			GameManager.instance.enemies_on_field++;
 			yield return new WaitForSeconds(2.0f); 
 		}
@@ -95,7 +93,6 @@ public class WaveManager : MonoBehaviour {
 			this.countdown = normalWaitTime;
 			UpdateWaveText();
 		}
-
 		if (GameManager.instance.enemies_on_field == 0) {
 			this.countdown -= Time.deltaTime;
 			UpdateCounter();
@@ -106,17 +103,17 @@ public class WaveManager : MonoBehaviour {
 		GameObject newEnemy = ModelManager.instance.CreateEnemy(prefabIndex, spawnPoint);
 		EnemyAI enemy_ai = newEnemy.GetComponent<EnemyAI>();
 		Unit unit = newEnemy.GetComponent<Unit>();
-		Wave curWave = waves[waveNum-1];
+		int gold = GameManager.instance.GameMode == GameManager.Mode.Timed ? (int)(waves[waveNum-1].moneyDrop * 1.1) : waves[waveNum-1].moneyDrop;
 
 		// Initialization
-		unit.Initialize(curWave.hpData, curWave.damageData, curWave.moneyDrop);
+		unit.Initialize(waves[waveNum-1].hpData, waves[waveNum-1].damageData, gold);
 		enemy_ai.Initialize(destination, GameManager.instance.playerBase.transform);
 		newEnemy.transform.SetParent(enemyParent);
 		newEnemy.SetActive(true);
 	}
 
 	private void UpdateWaveText() {
-		this.waveText.text = "Wave " + waveNum + "/" + waves.Length;
+		this.waveText.text = UIManager.DisplayWaveText(waveNum, waves.Length);
 	}
 
 	private void UpdateCounter() {

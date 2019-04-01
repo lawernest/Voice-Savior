@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour {
 	}
 
 	private void FixedUpdate () {
-		if (GameManager.instance.isPause) {
+		if (GameManager.instance.isPause()) {
 			return;
 		}
 

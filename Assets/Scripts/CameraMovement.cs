@@ -33,8 +33,9 @@ public class CameraMovement : MonoBehaviour {
 	// Update is called once per frame
 	private void Update () {
 		// Skip all the updates when the game is paused
-		if (GameManager.instance.isPause) 
+		if (GameManager.instance.isPause ()) {
 			return;
+		}
 
 		// For voice control
 		if (moveDirection != Direction.Center) {

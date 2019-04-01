@@ -34,8 +34,9 @@ public class Damager : MonoBehaviour {
 	}
 		
 	private void Update () {
-		if (GameManager.instance.isPause) 
+		if (GameManager.instance.isPause ()) { 
 			return;
+		}
 
 		if (this.target != null) {
 			if (this.useBullet) {

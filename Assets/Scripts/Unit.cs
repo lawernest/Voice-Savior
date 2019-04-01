@@ -38,7 +38,7 @@ public class Unit : MonoBehaviour {
 	}
 
 	protected virtual void Update() {
-		if (GameManager.instance.isPause) {
+		if (GameManager.instance.isPause()) {
 			return;
 		}
 
