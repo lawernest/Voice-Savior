@@ -6,7 +6,7 @@ public class Shop : MonoBehaviour {
 
 	public static Shop instance { get; private set; }
 
-	void Awake () {
+	private void Start() {
 		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
@@ -14,34 +14,58 @@ public class Shop : MonoBehaviour {
 		}
 	}
 
-	public void CannonButton() {
-		int index = ModelManager.instance.SearchForWeapon("Cannon");
-		ProductOnHold(index);
-	}
-
-	public void MachineGunButton() {
-		int index = ModelManager.instance.SearchForWeapon("Turret");
-		ProductOnHold(index);
-	}
-
-	public void ProductOnHold(int index) {
-		if (index == -1) {
-			return;
-		}
-
+	public int ProductOnHold(string name) {
+		int index = ModelManager.instance.SearchForWeapon(name);
 		GameObject unit = ModelManager.instance.GetWeaponPrefab(index);
+
 		if (unit != null) {
-			if (Player.instance.Gold - unit.GetComponent<Unit>().Cost >= 0) {
-				VoiceController.weapon_index = index;
-			} else {
-				VoiceController.weapon_index = -1;
+			if (Player.instance.EnoughGold(unit.GetComponent<Unit> ().Cost)) {
+				return index;
 			}
 		}
+		return -1;
 	}
 
-	public void SellTurret(GameObject tower) {
+	public bool Purchase(int weaponIndex, Transform tower) {
+		DefenseTower selectedTower = tower.GetComponent<DefenseTower>();
+		if (selectedTower.Turret == null) {
+			GameObject turret = ModelManager.instance.CreateWeapon(Controller.weaponIndex, tower.GetChild (0)); 
+			selectedTower.PlaceTurret(turret.transform);
+			Player.instance.ReduceGold(turret.GetComponent<Unit>().Cost);
+			return true;
+		}
+		return false;
+	}
+
+	public bool UpgradeWeapon(Transform tower) {
+		DefenseTower selectedTower = tower.GetComponent<DefenseTower>();
+		Upgrade turret = selectedTower.Turret.GetComponent<Upgrade>();
+
+		if (selectedTower.Turret != null && turret.Upgradable() && Player.instance.EnoughGold(turret.UpgradeCost)) {
+			GameObject upgradedTurret = turret.UpgradeUnit();
+			selectedTower.PlaceTurret(upgradedTurret.transform);
+			Player.instance.ReduceGold(turret.UpgradeCost);
+			return true;
+		}
+		return false;
+	}
+
+	public int Sell(GameObject tower) {
+		int gold = 0;
 		DefenseTower defense_tower = tower.GetComponent<DefenseTower>();
-		Player.instance.IncreaseGold((int)defense_tower.GetTurret().GetComponent<Unit>().Cost/2);
-		defense_tower.RemoveTurret();
+		if(defense_tower.Turret != null) {
+			gold = (int)defense_tower.Turret.GetComponent<Unit>().Cost / 2;
+			Player.instance.IncreaseGold(gold);
+			defense_tower.RemoveTurret();
+		}
+		return gold;
+	}
+
+	public void BuyCannon() {
+		MouseController.instance.Buy("Cannon");
+	}
+
+	public void BuyTurret() {
+		MouseController.instance.Buy("Turret");
 	}
 }

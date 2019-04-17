@@ -9,14 +9,15 @@ public class Explosion : MonoBehaviour {
 	private Unit unit;
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
 		this.unit = this.GetComponent<Unit>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (GameManager.instance.isPause) 
+	private void Update () {
+		if (GameManager.instance.isPause()) {
 			return;
+		}
 
 		if (this.unit.isDead()) {
 			Explode();
@@ -26,7 +27,7 @@ public class Explosion : MonoBehaviour {
 
 	public void Explode() {
 		GameObject effect = (GameObject)Instantiate(explosionPrefab, this.transform.position, this.transform.rotation);
-		effect.transform.localScale *= scale;
+		effect.transform.localScale *= this.scale;
 		effect.SetActive(true);
 		Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration);
 	}

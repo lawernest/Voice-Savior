@@ -15,67 +15,84 @@ public class WaveManager : MonoBehaviour {
 	[SerializeField] private Text counter;
 
 	private Transform enemyParent;
-	private const float normalWaitTime = 10.0f;
+	private const float normalWaitTime = 6.0f;
 	private float countdown;
 	private int waveNum;
-	private Text timer;
+	private bool isLast;
 
-	void Start() {
+	private delegate void WaveMode();
+	private WaveMode startWave;
+
+	private void Start() {
 		this.enemyParent = GameObject.Find("Enemy").transform;
-		this.timer = this.counter.transform.GetChild(0).GetComponent<Text>();
-		this.waveNum = 0;
+		this.waveNum = 1;
 		this.countdown = normalWaitTime;
+		this.isLast = false;
 		UpdateWaveText();
+
+		if (GameManager.instance.GameMode == GameManager.Mode.Timed) {
+			startWave = new WaveMode(TimedWave);
+		} else {
+			startWave = new WaveMode(NormalWave);
+		}
 	}
-
-	// Update is called once per frame
-	void Update() {
-		if (GameManager.instance.isPause)
+		
+	private void Update() {
+		if (GameManager.instance.isPause()) {
 			return;
-
-		if (this.waveNum >= this.waves.Length)
+		}
+		if (this.waveNum > this.waves.Length) {
 			this.gameObject.SetActive(false);
+		}
 
-		if (GameManager.instance.mode == 1)
-			TimedWave();
-		else
-			NormalWave();
+		startWave();
 	}
 
 	// Initialize the wave
 	IEnumerator InitWave() {
 		int index;
-		string[] sequence = this.waves[waveNum].enemySequence.Split(' ');
+		string[] sequence = this.waves[waveNum-1].enemySequence.Split(',');
+
+		if (GameManager.instance.GameMode == GameManager.Mode.Timed && this.waveNum >= this.waves.Length) {
+			this.isLast = true;
+		}
 
 		foreach (string type in sequence) {
 			index = System.Int32.Parse(type);
-			SpawnEnemy(index);
+			SpawnEnemy (index);
 			GameManager.instance.enemies_on_field++;
-			yield return new WaitForSeconds (1.0f); 
+			yield return new WaitForSeconds(2.0f); 
 		}
-			
-		this.waveNum++;
+
+		if (this.waveNum <= this.waves.Length) {
+			this.waveNum++;
+		}
 	}
 
 	// Wave start according to time
-	void TimedWave() {
+	private void TimedWave() {
 		if (countdown <= 0.0f) {
 			StartCoroutine(InitWave());
-			countdown = waves[waveNum].nextWaveTime;
+			countdown = waves[waveNum-1].nextWaveTime;
 			UpdateWaveText();
 		}
+			
+		if (!this.isLast) {
+			countdown -= Time.deltaTime;
+			UpdateCounter();
+		} else {
+			this.counter.gameObject.SetActive(false);
+		}
 
-		countdown -= Time.deltaTime;
 	}
 
 	// Wave start after all enemies are clear 
-	void NormalWave() {
+	private void NormalWave() {
 		if (countdown <= 0.0f) {
 			StartCoroutine(InitWave());
 			this.countdown = normalWaitTime;
 			UpdateWaveText();
 		}
-
 		if (GameManager.instance.enemies_on_field == 0) {
 			this.countdown -= Time.deltaTime;
 			UpdateCounter();
@@ -86,25 +103,25 @@ public class WaveManager : MonoBehaviour {
 		GameObject newEnemy = ModelManager.instance.CreateEnemy(prefabIndex, spawnPoint);
 		EnemyAI enemy_ai = newEnemy.GetComponent<EnemyAI>();
 		Unit unit = newEnemy.GetComponent<Unit>();
-		Wave curWave = waves[waveNum];
+		int gold = GameManager.instance.GameMode == GameManager.Mode.Timed ? (int)(waves[waveNum-1].moneyDrop * 1.1) : waves[waveNum-1].moneyDrop;
 
 		// Initialization
-		unit.Initialize(curWave.hpData[prefabIndex], curWave.damageData[prefabIndex], curWave.moneyDrop);
-		enemy_ai.Initialize(destination, GameManager.instance.PlayerBase.transform);
+		unit.Initialize(waves[waveNum-1].hpData, waves[waveNum-1].damageData, gold);
+		enemy_ai.Initialize(destination, GameManager.instance.playerBase.transform);
 		newEnemy.transform.SetParent(enemyParent);
 		newEnemy.SetActive(true);
 	}
 
 	private void UpdateWaveText() {
-		this.waveText.text = "Wave " + (waveNum + 1) + "/" + waves.Length;
+		this.waveText.text = UIManager.DisplayWaveText(waveNum, waves.Length);
 	}
 
 	private void UpdateCounter() {
 		if(!this.counter.IsActive()) {
 			this.counter.gameObject.SetActive(true);
 		}
-		this.timer.text = UIManager.instance.TimeFormat(countdown);
-		if (this.countdown <= 0.0f) {
+		this.counter.text = UIManager.TimeFormat(countdown);
+		if (this.countdown <= 0.0f && GameManager.instance.GameMode == GameManager.Mode.Normal) {
 			this.counter.gameObject.SetActive(false);
 		}
 	}

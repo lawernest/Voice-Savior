@@ -34,8 +34,9 @@ public class Damager : MonoBehaviour {
 	}
 		
 	private void Update () {
-		if (GameManager.instance.isPause) 
+		if (GameManager.instance.isPause ()) { 
 			return;
+		}
 
 		if (this.target != null) {
 			if (this.useBullet) {
@@ -55,10 +56,6 @@ public class Damager : MonoBehaviour {
 				this.countDown = 0.0f;
 			}
 		}
-	}
-
-	public void SetTarget(Transform enemy) {
-		this.target = enemy;
 	}
 
 	private void FireBullet() {

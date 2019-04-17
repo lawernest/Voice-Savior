@@ -14,24 +14,27 @@ public class EnemyAI : MonoBehaviour {
 	private void Start() {
 		this.agent = this.GetComponent<NavMeshAgent>();
 		this.damager = this.GetComponent<Damager>();
-		this.agent.SetDestination(destination.position);
+		if (destination != null) {
+			this.agent.SetDestination (destination.position);
+		}
 	}
 
 	public void Initialize(Transform destination, Transform attack_point) {
 		this.destination = destination;
 		this.target = attack_point;
 	}
-
-	// Update is called once per frame
-	void Update () {
-		if (GameManager.instance.isPause) return;
+		
+	private void Update () {
+		if (GameManager.instance.isPause()) {
+			return;
+		}
 
 		// Attack when it has reached the destination
 		if (this.transform.position.x == destination.position.x & this.transform.position.z == destination.position.z) {
 			if (target != null) {
-				this.damager.SetTarget(target);
+				this.damager.Target = target;
 			} else {
-				this.damager.SetTarget(null);
+				this.damager.Target = null;
 			}
 		}
 	}

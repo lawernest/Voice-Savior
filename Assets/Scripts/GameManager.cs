@@ -6,96 +6,141 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
+	public enum Mode
+	{
+		Normal,
+		Timed
+	};
+
+	public enum GameState 
+	{
+		StartMenu,
+		EndMenu,
+		Game,
+		Pause
+	};
+
 	public static GameManager instance { get; private set; }
 
-	[HideInInspector] public int enemies_on_field;
-	[HideInInspector] public bool isPause { get; private set; }
-	[HideInInspector] public bool inGame { get; private set; }
-	private GameObject player_base;
-	private GameObject waveManager;
+	[Header("Game Mode")]
+	[SerializeField] private Mode mode;
 
-	public GameObject PlayerBase {
+	[HideInInspector] public int enemies_on_field;
+	[HideInInspector] public GameObject playerBase;
+	private GameObject waveManager;
+	private float countDown;
+	private GameState state;
+
+	public Mode GameMode {
 		get {
-			return player_base;
+			return mode;
 		}
 	}
-
-	[Header("Game Mode")]
-	public int mode = 0; //0 = Normal, 1 = Timed
-
+		
 	private void Awake() {
 		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
 			Destroy(this.gameObject);
 		}
+		this.state = GameState.StartMenu;
 		DontDestroyOnLoad(this.gameObject);
-		InitGame();
+	}
+
+	public bool isPause() {
+		return this.state == GameState.Pause || this.state == GameState.EndMenu;
+	}
+
+	public bool isOnStartMenu() {
+		return this.state == GameState.StartMenu;
+	}
+
+	public bool isOnEndMenu() {
+		return this.state == GameState.EndMenu;
+	}
+
+	public bool inGame() {
+		return this.state == GameState.Game;
 	}
 
 	private void InitGame() {
-		//player_base = GameObject.Find("Player Base");
-		enemies_on_field = 0;
-		isPause = false;
-		inGame = false;
-
-		// Testing
-		inGame = true;
-		player_base = GameObject.Find ("Player Base");
-		waveManager = GameObject.Find ("Wave Manager");
+		this.enemies_on_field = 0;
+		this.countDown = 1.2f;
+		this.state = GameState.Game;
+		this.playerBase = GameObject.Find("Player Base");
+		this.waveManager = GameObject.Find("Wave Manager");
+		Controller.weaponInfo = GameObject.Find("WeaponInfo");
+		Controller.weaponInfo.SetActive(false);
+		VoiceController.instance.mainCamera = GameObject.Find("Main Camera").GetComponent<CameraMovement>();
+		VoiceController.instance.StopRecognitionSystem();
 	}
 
 	private void Update() {
-		if (inGame) {
-			if (player_base == null) {
-				Debug.Log ("Lose");
-				PauseGame();
-				//UIManager.instance.DisplayGameEndScene();
+		if (this.state == GameState.Game) {
+			if (playerBase == null) {
+				this.countDown -= Time.deltaTime;
+				this.waveManager.SetActive(false);
+				if(this.countDown <= 0.0f) {
+					PauseGame();
+					DisplayGameOverScene();
+				}
 			}
-			if (!waveManager.activeSelf && enemies_on_field == 0) {
-				Debug.Log ("Win");
+			if (!this.waveManager.activeSelf && this.enemies_on_field == 0) {
+				this.countDown -= Time.deltaTime;
+				if(this.countDown <= 0.0f) {
+					DisplayWinningScene();
+				}
 			}
 		}
 	}
 
 	IEnumerator LoadGameScene(string level) {
 		string path = "Scene/Levels/" + level + "/" + level;
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync (path, LoadSceneMode.Single);
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(path, LoadSceneMode.Single);
 
 		// wait until the scene is loaded
 		while(!asyncLoad.isDone) {
 			yield return null;
 		}
 
-		inGame = true;
-		player_base = GameObject.Find ("Player Base");
-		waveManager = GameObject.Find ("Wave Manager");
+		InitGame();
 	}
 
 	public void PauseGame() {
-		this.isPause = true;
+		this.state = GameState.Pause;
 		Time.timeScale = 0;
 	}
 
 	public void ResumeGame() {
-		this.isPause = false;
+		this.state = GameState.Game;
 		Time.timeScale = 1;
 	}
 
-	public void StartGame() {
+	public void StartGameInNormalMode() {
+		this.mode = Mode.Normal;
 		StartCoroutine(LoadGameScene("Level 0"));
 	}
 
-	public void DisplayGameEndScene() {
-		SceneManager.LoadSceneAsync("Scene/Menu/Game End", LoadSceneMode.Additive);
+	public void StartGameInTimedMode() {
+		this.mode = Mode.Timed;
+		StartCoroutine(LoadGameScene("Level 0"));
+	}
+
+	public void DisplayWinningScene() {
+		this.state = GameState.EndMenu;
+		SceneManager.LoadSceneAsync("Scene/Menu/Winning Scene", LoadSceneMode.Additive);
+	}
+
+	public void DisplayGameOverScene() {
+		this.state = GameState.EndMenu;
+		SceneManager.LoadSceneAsync("Scene/Menu/GameOver Scene", LoadSceneMode.Additive);
 	}
 
 	public void DisplayTitleScene() {
+		ResumeGame();
+		this.state = GameState.StartMenu;
 		SceneManager.LoadSceneAsync("Scene/Menu/Start Scene", LoadSceneMode.Single);
-	}
-
-	public void ResumeGameScene() {
-		SceneManager.UnloadSceneAsync("Scene/Menu/Game End");
+		SceneManager.UnloadSceneAsync("Scene/Levels/Level 0/Level 0");
 	}
 
 	public void QuitGame() {

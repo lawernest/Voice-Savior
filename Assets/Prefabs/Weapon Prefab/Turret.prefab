@@ -485,7 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d021d837c179d6499a6ecc79949532e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  next: {fileID: 1179724340862774, guid: 794d812b4cee2db41b8b52d80752a860, type: 2}
+  next: {fileID: 114703384901469874, guid: 794d812b4cee2db41b8b52d80752a860, type: 2}
 --- !u!114 &114621512174559910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -511,9 +511,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 4780414981805968}
-  laser: 0
+  useLaser: 0
   laserBeam: {fileID: 0}
-  bullet: 1
+  useBullet: 1
   ammoPrefab: {fileID: 4649879983618820, guid: f424df1fb8c377d4bb3008abd754771f, type: 2}
   fireRate: 5
 --- !u!114 &114870542258413534
@@ -528,6 +528,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_hp: 1000
-  cost: 100
-  damage: 20
+  cost: 150
+  damage: 4
   health_UI: {fileID: 0}

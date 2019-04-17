@@ -12,5 +12,8 @@ EditorBuildSettings:
     path: Assets/Scene/Levels/Level 0/Level 0.unity
     guid: 6565788ab9a63ef4b94050331d92de1a
   - enabled: 1
-    path: Assets/Scene/Menu/Game End.unity
-    guid: 746817af301df1b4091e1ca107931909
+    path: Assets/Scene/Menu/Winning Scene.unity
+    guid: f7fd419d5ccb9b44b84a46178da705bf
+  - enabled: 1
+    path: Assets/Scene/Menu/GameOver Scene.unity
+    guid: b07a8516df0bfd74e8880a0221f7fd80

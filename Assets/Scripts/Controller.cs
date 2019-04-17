@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public abstract class Controller : MonoBehaviour {
 
 	public static GameObject selected;
-	[SerializeField] protected Text gameLog;
+	public static GameObject weaponInfo;
+	public static int weaponIndex;
 
-	protected abstract void UpdateLog();
+	public abstract void Buy(string name);
 }

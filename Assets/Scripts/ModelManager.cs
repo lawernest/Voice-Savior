@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class ModelManager : MonoBehaviour {
 
-	public static ModelManager instance;
+	public static ModelManager instance { get; private set; }
 
-	public GameObject[] enemyPrefabs;
-	public GameObject[] weaponPrefabs; // Store all the weapons prefab (except the one for upgrade)
+	[SerializeField] private GameObject[] enemyPrefabs;
+	[SerializeField] private GameObject[] weaponPrefabs; // Store all the weapons prefab (except the one for upgrade)
+	[SerializeField] private GameObject[] towers;
+
+	public GameObject[] WeaponPrefabs {
+		get {
+			return weaponPrefabs;
+		}
+	}
+
+	public GameObject[] Towers {
+		get {
+			return towers;
+		}
+	}
 
 	// Use this for initialization
-	void Awake () {
+	private void Awake () {
 		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
@@ -36,8 +49,17 @@ public class ModelManager : MonoBehaviour {
 	}
 
 	public GameObject GetWeaponPrefab(int index) {
-		if (index >= 0 || index < weaponPrefabs.Length) {
+		if (index >= 0 && index < weaponPrefabs.Length) {
 			return this.weaponPrefabs[index];
+		}
+		return null;
+	}
+
+	public GameObject GetTowerByName(string name) {
+		for (int i = 0; i < towers.Length; i++) {
+			if (towers[i].name == name) {
+				return towers[i];
+			}
 		}
 		return null;
 	}

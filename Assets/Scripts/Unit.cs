@@ -24,30 +24,31 @@ public class Unit : MonoBehaviour {
 		}
 	}
 
-	private void Start() {
+	protected virtual void Start() {		
 		this.current_hp = this.max_hp;
 		if (health_UI != null) {
-			//this.health_UI.gameObject.SetActive (true);
 			health_bar = health_UI.transform.GetChild(1).GetComponent<Image>();
 		}
 	}
-		
-	public void Initialize(float hp, float damage, int cost) {
+
+	// Initialize the values for the unit
+	public virtual void Initialize(float hp, float damage, int cost) {
 		this.max_hp = hp;
 		this.damage = damage;
 		this.cost = cost;
 	}
 
-	private void Update() {
-		if (GameManager.instance.isPause) 
+	protected virtual void Update() {
+		if (GameManager.instance.isPause()) {
 			return;
+		}
 
-		if (this.isDead() && this.tag == "Enemy") {
+		if (isDead() && this.tag == "Enemy") {
 			Player.instance.IncreaseGold(this.cost);
 			GameManager.instance.enemies_on_field--;
 		}
 		if (health_UI != null) {
-			UIManager.instance.FaceToCamera(health_UI.transform);
+			UIManager.FaceToCamera(health_UI.transform);
 		}
 	}
 
@@ -55,11 +56,11 @@ public class Unit : MonoBehaviour {
 		this.current_hp -= damage;
 		if (health_bar != null) {
 			health_bar.fillAmount = current_hp / max_hp;
-			UIManager.instance.ChangeHealthBarColor(health_bar);
+			UIManager.ChangeHealthBarColor(health_bar);
 		}
 	}
 
 	public bool isDead() {
-		return this.current_hp <= 0.0f;
+		return (this.current_hp <= 0.0f);
 	}
 }
