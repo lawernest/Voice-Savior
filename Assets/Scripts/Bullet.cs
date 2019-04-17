@@ -27,14 +27,14 @@ public class Bullet : MonoBehaviour {
 		float cur_distance = this.speed * Time.deltaTime;
 
 		if (direction.magnitude <= cur_distance) {
-			HitTarget();
+			DamageTarget();
 			return;
 		}
 
 		this.transform.Translate(direction.normalized * cur_distance, Space.World);
 	}
 
-	private void HitTarget() {
+	private void DamageTarget() {
 		this.target.GetComponent<Unit>().ReduceHP(this.damage);
 		Destroy(this.gameObject);
 	}

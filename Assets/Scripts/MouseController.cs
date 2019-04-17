@@ -18,15 +18,14 @@ public class MouseController : Controller {
 
 		this.hitInfo = new RaycastHit();
 	}
-
-	// To-Do select weapon to upgrade/see
+		
 	private void Update() {
 		if (Input.GetMouseButtonDown(0) && GameManager.instance.inGame()) {
 			CameraMovement.moveDirection = CameraMovement.Direction.Center;
 			bool hit = Physics.Raycast (CameraMovement.mainCamera.ScreenPointToRay(Input.mousePosition), out this.hitInfo);
 			if(hit && this.hitInfo.transform.tag == "Defense Tower" && !EventSystem.current.IsPointerOverGameObject()) {
 				TargetIsSelected(true);
-				GameLog.instance.UpdateLog("Selected Tower " + Controller.selected.name);
+				GameLog.instance.UpdateLog("Select " + Controller.selected.name);
 			} else {
 				TargetIsSelected(false);
 			}
@@ -38,12 +37,13 @@ public class MouseController : Controller {
 		Controller.selected = isSelected ? this.hitInfo.transform.gameObject : null;
 		CameraMovement.movable = !isSelected;
 		UIManager.ShowWeaponInfo(isSelected);
-
 	}
 
 	public override void Buy(string name) {
 		Controller.weaponIndex = Shop.instance.ProductOnHold(name);
-		VoiceController.instance.command = VoiceController.Command.Buy;
+		if(Controller.weaponIndex > -1) {
+			VoiceController.instance.command = VoiceController.Command.Buy;
+		}
 		GameLog.instance.UpdateLog("Buy " + name);
 	}
 }

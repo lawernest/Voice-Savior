@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Windows.Speech; // For speech recognition
 
 public class VoiceController : Controller {
+	
 	public enum Command { 
 		None, 
 		Select,
@@ -31,14 +32,14 @@ public class VoiceController : Controller {
 			
 		PhraseRecognitionSystem.OnError += EncounterError;
 		commands_list = new List<string>();
-		AddBasicCommand();
+		AddBasicCommands();
 
 		StartRecognitionSystem();
 	}
 
 	private void Update() {
 		if(recognizer != null && !recognizer.IsRunning && GameManager.instance.inGame()) {
-			AddCommandsforCurrentLevel();
+			AddCommandsForCurrentLevel();
 			StartRecognitionSystem();
 		}
 	}
@@ -64,7 +65,7 @@ public class VoiceController : Controller {
 		}
 	}
 
-	private void AddBasicCommand() {
+	private void AddBasicCommands() {
 		commands_list.Add("Play Normal");
 		commands_list.Add("Play Timed");
 		commands_list.Add("Quit");
@@ -81,7 +82,7 @@ public class VoiceController : Controller {
 		commands_list.Add("Stop");
 	}
 
-	private void AddCommandsforCurrentLevel() {
+	private void AddCommandsForCurrentLevel() {
 		GameObject[] towers = ModelManager.instance.Towers;
 		GameObject[] weapons = ModelManager.instance.WeaponPrefabs;
 
@@ -105,44 +106,72 @@ public class VoiceController : Controller {
 		}
 	}
 
+	private void ProcessStartMenuCommand(string command) {
+		if (command == "Play Normal") {
+			GameManager.instance.StartGameInNormalMode();
+		}
+		else if (command == "Play Timed") {
+			GameManager.instance.StartGameInTimedMode();
+		}
+		else if(command == "Quit") {
+			GameManager.instance.QuitGame ();
+		}
+	}
+
+	private void ProcessEndGameMenuCommand(string command) {
+		if (command == "Continue") {
+			GameManager.instance.DisplayTitleScene();
+		}
+	}
+
+	private void ProcessPauseMenuCommand(string command) {
+		if (command == "Resume") {
+			GameLog.instance.UpdateLog(command);
+			GameManager.instance.ResumeGame();
+		}
+	}
+
 
 	private void OnKeywordsRecognized(PhraseRecognizedEventArgs args) {
 		string[] words = args.text.Split(' ');
 
-		if (GameManager.instance.isOnStartMenu()) {
+		if (GameManager.instance.isOnStartMenu()) { // On Start menu
 			if (args.text == "Play Normal") {
 				GameManager.instance.StartGameInNormalMode();
 			}
 			else if (args.text == "Play Timed") {
 				GameManager.instance.StartGameInTimedMode();
 			}
-			else if (words [0] == "Quit") {
+			else if(args.text == "Quit") {
 				GameManager.instance.QuitGame ();
 			}
-		} else if (GameManager.instance.isOnEndMenu()) {
-			if (words [0] == "Continue") {
+		} 
+		else if (GameManager.instance.isOnEndMenu()) { // On End Game menu
+			if (args.text == "Continue") {
 				GameManager.instance.DisplayTitleScene();
 			}
-		} else if (GameManager.instance.isPause()) {
-			if (words [0] == "Resume") {
+		}
+		else if (GameManager.instance.isPause()) { // On Pause Menu
+			if (args.text == "Resume") {
 				GameLog.instance.UpdateLog(args.text);
 				GameManager.instance.ResumeGame();
 			}
-		} else if(GameManager.instance.inGame()) {
-			MoveCamera("Stop"); // stop the camera whenever a new commands is requested
-			switch (words[0]) {
+		} 
+		else if(GameManager.instance.inGame()) { // In Game
+			MoveCamera("Stop");
+			switch(words[0]) {
 			case "Pause":
 				GameLog.instance.UpdateLog(args.text);
 				GameManager.instance.PauseGame();
 				break;
 			case "Move":
 				GameLog.instance.UpdateLog(args.text);
-				MoveCamera(words [1]);
+				MoveCamera(words[1]);
 				ResetCommand();
 				break;
 			case "Look":
 				GameLog.instance.UpdateLog(args.text);
-				LookAt (words [1]);
+				LookAt (words[1]);
 				ResetCommand();
 				break;
 			case "Stop":
@@ -169,18 +198,14 @@ public class VoiceController : Controller {
 				UIManager.ShowWeaponInfo(false);
 			}
 
-			if (weaponIndex > -1) {
-				cur_command = Command.Buy;
-			}
-
-			switch (cur_command) {
+			switch(cur_command) {
 			case Command.Select:
-				if (words [0] == "Upgrade") {
+				if (words[0] == "Upgrade") {
 					GameLog.instance.UpdateLog(args.text);
 					Upgrade();
 					UIManager.ShowWeaponInfo(false);
 					ResetCommand();
-				} else if (words [0] == "Sell") {
+				} else if (words[0] == "Sell") {
 					GameLog.instance.UpdateLog(args.text);
 					Sell();
 					UIManager.ShowWeaponInfo(false);
@@ -190,7 +215,7 @@ public class VoiceController : Controller {
 			case Command.Buy:
 				if (words[0] == "Place") {
 					GameLog.instance.UpdateLog(args.text);
-					PlaceOn (words [2]);
+					PlaceOn(words[2]);
 					ResetCommand();
 				}
 				break;
@@ -230,8 +255,7 @@ public class VoiceController : Controller {
 			break;
 		}
 	}
-
-	// select by tower name
+		
 	private void Select(string name) {
 		Controller.selected = ModelManager.instance.GetTowerByName(name);
 		if (Controller.selected != null) {
@@ -244,6 +268,9 @@ public class VoiceController : Controller {
 		
 	public override void Buy(string name) {
 		Controller.weaponIndex = Shop.instance.ProductOnHold(name);
+		if (Controller.weaponIndex > -1) {
+			cur_command = Command.Buy;
+		}
 	}
 
 	private void Upgrade() {

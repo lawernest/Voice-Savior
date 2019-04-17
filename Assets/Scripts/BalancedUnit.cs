@@ -7,7 +7,7 @@ public class BalancedUnit : Unit {
 	protected override void Start () {
 		base.Start();
 	}
-
+		
 	public override void Initialize(float hp, float damage, int cost) {
 		base.Initialize(hp, damage, cost);
 	}

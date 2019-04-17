@@ -30,7 +30,8 @@ public class Unit : MonoBehaviour {
 			health_bar = health_UI.transform.GetChild(1).GetComponent<Image>();
 		}
 	}
-		
+
+	// Initialize the values for the unit
 	public virtual void Initialize(float hp, float damage, int cost) {
 		this.max_hp = hp;
 		this.damage = damage;
@@ -60,6 +61,6 @@ public class Unit : MonoBehaviour {
 	}
 
 	public bool isDead() {
-		return this.current_hp <= 0.0f;
+		return (this.current_hp <= 0.0f);
 	}
 }
