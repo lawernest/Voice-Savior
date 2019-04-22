@@ -120,11 +120,9 @@ public class VoiceController : Controller {
 		if (GameManager.instance.isOnStartMenu()) { // On Start menu
 			if (args.text == "Play Normal") {
 				GameManager.instance.StartGameInNormalMode();
-			}
-			else if (args.text == "Play Timed") {
+			} else if (args.text == "Play Timed") {
 				GameManager.instance.StartGameInTimedMode();
-			}
-			else if(args.text == "Quit") {
+			} else if(args.text == "Quit") {
 				GameManager.instance.QuitGame ();
 			}
 		} 
@@ -139,7 +137,7 @@ public class VoiceController : Controller {
 				GameManager.instance.ResumeGame();
 			}
 		} 
-		else if(GameManager.instance.inGame()) { // In Game
+		else if(GameManager.instance.inGame()) { // In-Game
 			MoveCamera("Stop");
 			switch(words[0]) {
 			case "Pause":
